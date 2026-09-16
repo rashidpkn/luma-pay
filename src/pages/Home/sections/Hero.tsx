@@ -71,7 +71,7 @@ const EUFlag = () => (
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen w-full bg-[#020817] text-white overflow-hidden flex flex-col justify-between selection:bg-[#00D2FF]/30">
+    <section className="relative min-h-screen w-full bg-[#020817] text-white overflow-hidden flex flex-col justify-between selection:bg-[#00D2FF]/30 pt-24 sm:pt-28 lg:pt-32">
       {/* Background 3D Wave & Glow Layers */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {/* Organic 3D dark ribbon wave backdrop */}
@@ -106,55 +106,7 @@ export default function Hero() {
         </button>
       </div>
 
-      {/* Top Navigation Bar */}
-      <header className="relative z-30 w-full px-6 sm:px-10 lg:px-14 pt-7 pb-4 flex items-center justify-between">
-        {/* Left: Brand Identity */}
-        <div className="flex items-center gap-3">
-          <button
-            type="button"
-            className="group flex items-center gap-1 focus:outline-none cursor-pointer"
-          >
-            {/* Split circle logo */}
-            <div className="w-7 h-7 rounded-full border border-white/40 flex items-center justify-center relative overflow-hidden bg-[#020817] transition-transform group-hover:scale-105 shadow-sm">
-              <div className="absolute left-0 top-0 bottom-0 w-1/2 bg-[#020817]" />
-              <div className="absolute right-0 top-0 bottom-0 w-1/2 bg-white" />
-            </div>
-            <ChevronDown className="w-3.5 h-3.5 text-white/80 group-hover:text-white transition-colors ml-0.5" />
-          </button>
 
-          <div className="flex flex-col text-left">
-            <span className="text-white text-[14px] sm:text-[15px] font-medium leading-tight">
-              <strong className="font-semibold text-white">Speedy Global</strong>
-              , welcome!
-            </span>
-            <span className="text-[#94A3B8] text-[11px] sm:text-[12px] leading-tight mt-0.5 font-normal">
-              All your business needs in one platform.
-            </span>
-          </div>
-        </div>
-
-        {/* Center: Minimalist Hamburger Menu */}
-        <div className="hidden md:flex items-center justify-center">
-          <button
-            type="button"
-            aria-label="Navigation Menu"
-            className="flex flex-col items-center justify-center gap-1.5 p-2 group cursor-pointer focus:outline-none"
-          >
-            <span className="w-7 h-[2px] bg-white rounded-full transition-all group-hover:w-9 group-hover:bg-[#00D2FF]" />
-            <span className="w-7 h-[2px] bg-white rounded-full transition-all group-hover:w-9 group-hover:bg-[#00D2FF]" />
-          </button>
-        </div>
-
-        {/* Right: "Get the app" CTA Button */}
-        <div>
-          <button
-            type="button"
-            className="bg-white text-[#020817] text-[13px] sm:text-[14px] font-semibold px-5 sm:px-6 py-2 sm:py-2.5 rounded-full hover:bg-slate-100 hover:shadow-[0_0_25px_rgba(255,255,255,0.45)] transition-all duration-200 active:scale-95 cursor-pointer shadow-md tracking-tight"
-          >
-            Get the app
-          </button>
-        </div>
-      </header>
 
       {/* Main Hero Body */}
       <div className="relative z-20 w-full max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-14 flex-1 flex flex-col lg:flex-row items-center justify-between py-6 lg:py-2">
