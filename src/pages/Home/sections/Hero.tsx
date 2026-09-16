@@ -112,10 +112,10 @@ export default function Hero() {
       <div className="relative z-20 w-full max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-14 flex-1 flex flex-col lg:flex-row items-center justify-between py-6 lg:py-2">
         {/* Left Headline & Subtitle */}
         <div className="w-full lg:w-1/2 flex flex-col justify-center text-left pt-6 lg:pt-0 lg:pl-4">
-          <h1 className="text-white text-5xl sm:text-6xl md:text-7xl lg:text-[80px] xl:text-[90px] font-bold tracking-[-0.035em] leading-[1.02] drop-shadow-sm">
-            Your Money.
+          <h1 className="text-white text-5xl sm:text-6xl md:text-7xl lg:text-[76px] xl:text-[84px] font-bold tracking-[-0.035em] leading-[1.04] drop-shadow-sm">
+            Smart Payments.
             <br />
-            <span className="text-white">Simplified.</span>
+            <span className="text-white">Limitless Possibilities.</span>
           </h1>
 
           <p className="text-[#94A3B8] text-base sm:text-lg md:text-[19px] mt-6 sm:mt-8 font-normal leading-relaxed max-w-lg tracking-normal">

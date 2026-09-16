@@ -3,9 +3,9 @@ import Steps from "./sections/Steps"
 
 export default function HomePage() {
     return (
-        <main>
+        <div>
             <Hero />
             <Steps />
-        </main>
+        </div>
     )
 }

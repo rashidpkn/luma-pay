@@ -1,5 +1,40 @@
 import { useState, useEffect } from "react";
-import { ChevronDown, HelpCircle } from "lucide-react";
+import { HelpCircle } from "lucide-react";
+
+// Chevron Icon matching reference
+export function ChevronIcon({ className = "w-3 h-2" }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 12 8"
+      className={className}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path d="M1.5 2L6 6.5L10.5 2" />
+    </svg>
+  );
+}
+
+// Close (X) Icon matching reference image 4 exactly
+export function CloseIcon({ className = "w-7 h-7" }: { className?: string }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      className={className}
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <line x1="5" y1="5" x2="19" y2="19" />
+      <line x1="19" y1="5" x2="5" y2="19" />
+    </svg>
+  );
+}
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -20,7 +55,7 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Prevent body scrolling when menu is open
+  // Prevent background scrolling when full-screen menu is open
   useEffect(() => {
     if (isMenuOpen) {
       document.body.style.overflow = "hidden";
@@ -34,7 +69,7 @@ export default function Header() {
 
   return (
     <>
-      {/* Fixed Header Bar with Morphing Hamburger/Close Button */}
+      {/* Fixed Header Bar */}
       <header
         className={`fixed top-0 left-0 right-0 z-[70] w-full px-6 sm:px-10 lg:px-14 flex items-center justify-between transition-all duration-500 ease-in-out ${
           isMenuOpen
@@ -44,67 +79,64 @@ export default function Header() {
             : "bg-transparent py-6 sm:py-7 border-b border-transparent"
         }`}
       >
-        {/* Left: Brand Identity */}
-        <div className="flex items-center gap-3">
-          {/* Logo icon (split black/white circle) + dropdown chevron */}
+        {/* Left: Luma Pay Brand Identity */}
+        <div className="flex items-center gap-2.5 z-10">
           <button
             type="button"
-            className="group flex items-center gap-1 focus:outline-none cursor-pointer"
+            className="group flex items-center gap-2 focus:outline-none cursor-pointer"
           >
-            <div className="w-7 h-7 rounded-full border border-white/40 flex items-center justify-center relative overflow-hidden bg-[#020817] transition-transform group-hover:scale-105 shadow-sm">
-              <div className="absolute left-0 top-0 bottom-0 w-1/2 bg-[#020817]" />
-              <div className="absolute right-0 top-0 bottom-0 w-1/2 bg-white" />
-            </div>
-            <ChevronDown className="w-3.5 h-3.5 text-white/80 group-hover:text-white transition-colors ml-0.5" />
+            {/* Luma Pay Official Logo Glyph */}
+            <img
+              src="/favicon.png"
+              alt="Luma Pay logo"
+              className="w-8 h-8 rounded-lg object-contain shadow-sm transition-transform group-hover:scale-105"
+            />
+            <ChevronIcon className="w-2.5 h-2 text-white/80 group-hover:text-white transition-colors" />
           </button>
 
-          {/* Subtitle text smoothly hidden when menu is open */}
+          {/* Subtitle text: visible when closed, cleanly hidden when menu is open */}
           <div
-            className={`flex flex-col text-left transition-all duration-300 ${
+            className={`flex flex-col text-left ml-1 transition-all duration-300 ${
               isMenuOpen
-                ? "opacity-0 -translate-x-3 pointer-events-none"
+                ? "opacity-0 -translate-x-3 pointer-events-none hidden sm:flex"
                 : "opacity-100 translate-x-0"
             }`}
           >
-            <span className="text-white text-[14px] sm:text-[15px] font-medium leading-tight">
-              <strong className="font-semibold text-white">Speedy Global</strong>
-              , welcome!
+            <span className="text-white text-[15px] sm:text-[16px] leading-tight">
+              <strong className="font-bold text-white">Luma Pay</strong>
+              <span className="font-normal text-white">, welcome!</span>
             </span>
-            <span className="text-[#94A3B8] text-[11px] sm:text-[12px] leading-tight mt-0.5 font-normal">
-              All your business needs in one platform.
+            <span className="text-[#94A3B8] text-[12px] sm:text-[13px] leading-tight mt-0.5 font-normal">
+              Smart payments. Limitless possibilities.
             </span>
           </div>
         </div>
 
-        {/* Center: Interactive Hamburger morphing smoothly to Close (X) */}
-        <div className="flex items-center justify-center">
+        {/* Center: Menu & Close Icon - MATHEMATICALLY PERFECTLY CENTERED */}
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-20 flex items-center justify-center pointer-events-auto">
           <button
             type="button"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label={isMenuOpen ? "Close Menu" : "Open Navigation Menu"}
-            className="relative w-10 h-10 flex flex-col items-center justify-center gap-1 group cursor-pointer focus:outline-none"
+            className="relative w-12 h-12 flex items-center justify-center group cursor-pointer focus:outline-none transition-transform active:scale-95"
           >
-            {/* Top Bar */}
-            <span
-              className={`h-[2px] bg-white rounded-full transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-                isMenuOpen
-                  ? "w-6 rotate-45 translate-y-[3px] bg-[#00D2FF]"
-                  : "w-7 -translate-y-0.5 group-hover:w-9 group-hover:bg-[#00D2FF]"
-              }`}
-            />
-            {/* Bottom Bar */}
-            <span
-              className={`h-[2px] bg-white rounded-full transition-all duration-400 ease-[cubic-bezier(0.16,1,0.3,1)] ${
-                isMenuOpen
-                  ? "w-6 -rotate-45 -translate-y-[3px] bg-[#00D2FF]"
-                  : "w-7 translate-y-0.5 group-hover:w-9 group-hover:bg-[#00D2FF]"
-              }`}
-            />
+            {isMenuOpen ? (
+              /* Image 4: Crisp white X with smooth entrance */
+              <div className="text-white hover:text-[#00D2FF] transition-colors flex items-center justify-center animate-fadeIn">
+                <CloseIcon className="w-7 h-7 hover:rotate-90 transition-transform duration-300" />
+              </div>
+            ) : (
+              /* Two crisp horizontal bars */
+              <div className="flex flex-col items-center justify-center gap-[6px] w-8 h-8">
+                <span className="w-8 h-[2px] bg-white rounded-full transition-all group-hover:w-10 group-hover:bg-[#00D2FF]" />
+                <span className="w-8 h-[2px] bg-white rounded-full transition-all group-hover:w-10 group-hover:bg-[#00D2FF]" />
+              </div>
+            )}
           </button>
         </div>
 
         {/* Right: "Get the app" CTA Button */}
-        <div>
+        <div className="z-10">
           <button
             type="button"
             className="bg-white text-[#020817] text-[13px] sm:text-[14px] font-semibold px-5 sm:px-6 py-2 sm:py-2.5 rounded-full hover:bg-slate-100 hover:shadow-[0_0_25px_rgba(255,255,255,0.45)] transition-all duration-200 active:scale-95 cursor-pointer shadow-md tracking-tight"
@@ -114,7 +146,7 @@ export default function Header() {
         </div>
       </header>
 
-      {/* Full-Screen Menu Overlay with Smooth Entrance Animations */}
+      {/* Full-Screen Menu Overlay with Smooth Animations */}
       <div
         className={`fixed inset-0 z-[60] bg-[#020817] text-white flex flex-col justify-between px-6 sm:px-12 lg:px-20 pt-28 pb-10 overflow-y-auto transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
           isMenuOpen
@@ -141,10 +173,10 @@ export default function Header() {
             </span>
 
             <nav className="flex flex-col gap-6 sm:gap-8">
-              {/* Speedy Business */}
+              {/* Luma Business */}
               <div className="flex items-baseline flex-wrap gap-3 group cursor-pointer">
                 <span className="text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-neutral-500 group-hover:text-neutral-300 transition-colors">
-                  Speedy
+                  Luma
                 </span>
                 <span className="text-base sm:text-lg text-gray-400 font-normal group-hover:text-gray-200 transition-colors">
                   Business

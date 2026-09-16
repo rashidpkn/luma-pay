@@ -10,17 +10,15 @@ export default function Footer() {
       <div className="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-14 py-16">
         {/* Main Footer Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-8 mb-14">
-          {/* Brand Col */}
+          {/* Brand Col with Official Luma Pay Logo */}
           <div className="lg:col-span-2 flex flex-col justify-between pr-4">
             <div>
-              <div className="flex items-center gap-2.5 mb-4">
-                <div className="w-7 h-7 rounded-full border border-white/40 flex items-center justify-center relative overflow-hidden bg-[#020817] shadow-sm">
-                  <div className="absolute left-0 top-0 bottom-0 w-1/2 bg-[#020817]" />
-                  <div className="absolute right-0 top-0 bottom-0 w-1/2 bg-white" />
-                </div>
-                <span className="text-xl font-bold tracking-tight text-white">
-                  Speedy Global
-                </span>
+              <div className="mb-5">
+                <img
+                  src="/logo-white.png"
+                  alt="Luma Pay"
+                  className="h-9 sm:h-10 w-auto object-contain"
+                />
               </div>
               <p className="text-gray-400 text-sm leading-relaxed max-w-sm">
                 The next-generation cross-border payment platform. Send, spend,
@@ -105,7 +103,7 @@ export default function Footer() {
             <Globe className="w-4 h-4 text-gray-400" />
             <span>English (US)</span>
             <span className="mx-2">•</span>
-            <span>© 2026 Speedy Global Inc. All rights reserved.</span>
+            <span>© 2026 Luma Pay Inc. All rights reserved.</span>
           </div>
 
           <div className="flex items-center gap-6">
