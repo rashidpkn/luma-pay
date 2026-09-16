@@ -2,11 +2,33 @@
 
 @layer base {
   body {
-    background-color: #020817;
+    background-color: #080F38;
     color: #ffffff;
     font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
     overflow-x: hidden;
     margin: 0;
     padding: 0;
   }
+}
+
+@keyframes pupilGlance {
+  0%, 100% {
+    transform: translate(0px, 0px);
+  }
+  20% {
+    transform: translate(3.5px, -1.5px);
+  }
+  40% {
+    transform: translate(3px, 2px);
+  }
+  60% {
+    transform: translate(-3px, 1.5px);
+  }
+  80% {
+    transform: translate(-2.5px, -2px);
+  }
+}
+
+.animate-pupil-glance {
+  animation: pupilGlance 6s cubic-bezier(0.45, 0, 0.55, 1) infinite;
 }

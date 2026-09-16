@@ -71,7 +71,7 @@ const EUFlag = () => (
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen w-full bg-[#020817] text-white overflow-hidden flex flex-col justify-between selection:bg-[#00D2FF]/30 pt-24 sm:pt-28 lg:pt-32">
+    <section className="relative min-h-screen w-full bg-[#080F38] text-white overflow-hidden flex flex-col justify-between selection:bg-[#00D2FF]/30 pt-24 sm:pt-28 lg:pt-32">
       {/* Background 3D Wave & Glow Layers */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {/* Organic 3D dark ribbon wave backdrop */}
@@ -86,7 +86,7 @@ export default function Hero() {
         <div className="absolute bottom-[10%] left-[8%] w-[450px] h-[450px] bg-[#00D2FF]/7 rounded-full blur-[160px]" />
 
         {/* Soft Vignette Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#020817] via-transparent to-[#020817]/30" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#080F38] via-transparent to-[#080F38]/30" />
       </div>
 
       {/* Left Docked Tab: Awards & Certifications */}

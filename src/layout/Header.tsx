@@ -75,7 +75,7 @@ export default function Header() {
           isMenuOpen
             ? "bg-transparent py-6 border-b border-transparent"
             : isScrolled
-            ? "bg-[#020817]/85 backdrop-blur-xl py-4 border-b border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.5)]"
+            ? "bg-[#080F38]/85 backdrop-blur-xl py-4 border-b border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.5)]"
             : "bg-transparent py-6 sm:py-7 border-b border-transparent"
         }`}
       >
@@ -139,7 +139,7 @@ export default function Header() {
         <div className="z-10">
           <button
             type="button"
-            className="bg-white text-[#020817] text-[13px] sm:text-[14px] font-semibold px-5 sm:px-6 py-2 sm:py-2.5 rounded-full hover:bg-slate-100 hover:shadow-[0_0_25px_rgba(255,255,255,0.45)] transition-all duration-200 active:scale-95 cursor-pointer shadow-md tracking-tight"
+            className="bg-white text-[#080F38] text-[13px] sm:text-[14px] font-semibold px-5 sm:px-6 py-2 sm:py-2.5 rounded-full hover:bg-slate-100 hover:shadow-[0_0_25px_rgba(255,255,255,0.45)] transition-all duration-200 active:scale-95 cursor-pointer shadow-md tracking-tight"
           >
             Get the app
           </button>
@@ -148,7 +148,7 @@ export default function Header() {
 
       {/* Full-Screen Menu Overlay with Smooth Animations */}
       <div
-        className={`fixed inset-0 z-[60] bg-[#020817] text-white flex flex-col justify-between px-6 sm:px-12 lg:px-20 pt-28 pb-10 overflow-y-auto transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+        className={`fixed inset-0 z-[60] bg-[#080F38] text-white flex flex-col justify-between px-6 sm:px-12 lg:px-20 pt-28 pb-10 overflow-y-auto transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
           isMenuOpen
             ? "opacity-100 visible pointer-events-auto"
             : "opacity-0 invisible pointer-events-none"

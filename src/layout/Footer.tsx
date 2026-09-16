@@ -2,7 +2,7 @@ import { Globe } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="relative z-20 w-full bg-[#020817] text-white border-t border-white/10 overflow-hidden">
+    <footer className="relative z-20 w-full bg-[#080F38] text-white border-t border-white/10 overflow-hidden">
       {/* Subtle Top Glow Accent */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[1px] bg-gradient-to-r from-transparent via-[#00D2FF]/60 to-transparent" />
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[80px] bg-[#00D2FF]/5 rounded-full blur-[70px] pointer-events-none" />
