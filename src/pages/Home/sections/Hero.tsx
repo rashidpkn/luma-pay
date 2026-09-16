@@ -1,10 +1,10 @@
 import { ChevronDown, Plus, HelpCircle, Trophy } from "lucide-react";
-import sculptureImg from "../../../assets/sculpture.jpg";
+import figure8Img from "../../../assets/sculpture-figure8.png";
 import heroBgImg from "../../../assets/hero-bg.jpg";
 
-// SVG Flags for pixel-perfect presentation
+// SVG Flags for crisp, authentic rendering
 const USAFlag = () => (
-  <svg viewBox="0 0 512 512" className="w-4 h-4 rounded-full inline-block shadow-sm">
+  <svg viewBox="0 0 512 512" className="w-4 h-4 rounded-full inline-block shadow-xs flex-shrink-0">
     <circle cx="256" cy="256" r="256" fill="#f0f0f0" />
     <g fill="#d80027">
       <path d="M0 213.3h512v42.7H0zm0 85.4h512v42.7H0zm0 85.3h512v42.7H0zM0 426.7h512V470H0zM0 42.7h512v42.6H0zm0 85.3h512v42.7H0z" />
@@ -29,7 +29,7 @@ const USAFlag = () => (
 );
 
 const UAEFlag = () => (
-  <svg viewBox="0 0 512 512" className="w-4 h-4 rounded-full inline-block shadow-sm">
+  <svg viewBox="0 0 512 512" className="w-4 h-4 rounded-full inline-block shadow-xs flex-shrink-0">
     <path fill="#496e2d" d="M0 85.3h512v113.8H0z" />
     <path fill="#f0f0f0" d="M0 199.1h512v113.8H0z" />
     <path fill="#000" d="M0 312.9h512v113.8H0z" />
@@ -38,7 +38,7 @@ const UAEFlag = () => (
 );
 
 const BrazilFlag = () => (
-  <svg viewBox="0 0 512 512" className="w-5 h-5 rounded-full inline-block shadow-sm">
+  <svg viewBox="0 0 512 512" className="w-4.5 h-4.5 rounded-full inline-block shadow-xs flex-shrink-0">
     <path fill="#6da544" d="M0 0h512v512H0z" />
     <path fill="#ffda44" d="M256 64 472 256 256 448 40 256z" />
     <circle cx="256" cy="256" r="112" fill="#0052b4" />
@@ -50,7 +50,7 @@ const BrazilFlag = () => (
 );
 
 const EUFlag = () => (
-  <svg viewBox="0 0 512 512" className="w-5 h-5 rounded-full inline-block shadow-sm">
+  <svg viewBox="0 0 512 512" className="w-5 h-5 rounded-full inline-block shadow-xs flex-shrink-0">
     <circle cx="256" cy="256" r="256" fill="#003399" />
     <g fill="#ffcc00">
       <circle cx="256" cy="76" r="14" />
@@ -71,36 +71,35 @@ const EUFlag = () => (
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen w-full bg-[#020817] text-white overflow-hidden flex flex-col justify-between select-none">
+    <section className="relative min-h-screen w-full bg-[#020817] text-white overflow-hidden flex flex-col justify-between selection:bg-[#00D2FF]/30">
       {/* Background 3D Wave & Glow Layers */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        {/* Cinematic Backdrop Image */}
+        {/* Organic 3D dark ribbon wave backdrop */}
         <img
           src={heroBgImg}
           alt="Dark fluid background"
-          className="absolute inset-0 w-full h-full object-cover object-center opacity-45 mix-blend-screen scale-105"
+          className="absolute inset-0 w-full h-full object-cover object-center opacity-85"
         />
 
-        {/* Dynamic Glowing Radial Highlights */}
-        <div className="absolute top-[10%] right-[15%] w-[550px] h-[550px] bg-[#00D2FF]/10 rounded-full blur-[140px] pointer-events-none" />
-        <div className="absolute bottom-[5%] left-[5%] w-[450px] h-[450px] bg-[#00D2FF]/8 rounded-full blur-[160px] pointer-events-none" />
-        <div className="absolute top-1/2 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[500px] bg-indigo-950/20 rounded-full blur-[180px] pointer-events-none" />
+        {/* Ambient Cyan glow reflections */}
+        <div className="absolute top-[18%] right-[22%] w-[550px] h-[550px] bg-[#00D2FF]/10 rounded-full blur-[150px]" />
+        <div className="absolute bottom-[10%] left-[8%] w-[450px] h-[450px] bg-[#00D2FF]/7 rounded-full blur-[160px]" />
 
-        {/* Ambient Vignette Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#020817]/60 via-transparent to-[#020817]/90" />
+        {/* Soft Vignette Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#020817] via-transparent to-[#020817]/30" />
       </div>
 
       {/* Left Docked Tab: Awards & Certifications */}
       <div className="hidden lg:flex fixed left-0 top-1/2 -translate-y-1/2 z-40">
         <button
           type="button"
-          aria-label="Awards & Certifications"
-          className="bg-white text-black py-4 px-2 rounded-r-xl shadow-2xl flex flex-col items-center gap-3 transition-transform duration-300 hover:translate-x-1 cursor-pointer border-t border-r border-b border-gray-200"
+          aria-label="Awards and Certifications"
+          className="bg-white text-black py-4 px-2 rounded-r-lg shadow-2xl flex flex-col items-center gap-3 transition-transform duration-300 hover:translate-x-1 cursor-pointer border-t border-r border-b border-gray-200"
         >
-          <span className="text-[12px] font-bold tracking-tight [writing-mode:vertical-rl] rotate-180 text-gray-900 py-1">
+          <span className="text-[11px] font-bold tracking-tight [writing-mode:vertical-rl] rotate-180 text-gray-900 py-1 select-none">
             Awards & Certifications
           </span>
-          <div className="w-4 h-[1px] bg-gray-200" />
+          <div className="w-3.5 h-[1px] bg-gray-200" />
           <div className="w-5 h-5 flex items-center justify-center text-black">
             <Trophy className="w-4 h-4 stroke-[2.2]" />
           </div>
@@ -108,28 +107,27 @@ export default function Hero() {
       </div>
 
       {/* Top Navigation Bar */}
-      <header className="relative z-30 w-full px-6 sm:px-10 lg:px-16 pt-7 pb-4 flex items-center justify-between">
-        {/* Left: Brand Identity & Subtitle */}
-        <div className="flex items-center gap-3.5">
-          {/* Half dark / half light round logo icon with dropdown indicator */}
+      <header className="relative z-30 w-full px-6 sm:px-10 lg:px-14 pt-7 pb-4 flex items-center justify-between">
+        {/* Left: Brand Identity */}
+        <div className="flex items-center gap-3">
           <button
             type="button"
-            className="group flex items-center gap-1.5 focus:outline-none cursor-pointer"
+            className="group flex items-center gap-1 focus:outline-none cursor-pointer"
           >
-            <div className="w-8 h-8 rounded-full border border-white/30 flex items-center justify-center relative overflow-hidden bg-[#020817] shadow-inner transition-transform group-hover:scale-105">
-              {/* Left half black / right half white */}
+            {/* Split circle logo */}
+            <div className="w-7 h-7 rounded-full border border-white/40 flex items-center justify-center relative overflow-hidden bg-[#020817] transition-transform group-hover:scale-105 shadow-sm">
               <div className="absolute left-0 top-0 bottom-0 w-1/2 bg-[#020817]" />
               <div className="absolute right-0 top-0 bottom-0 w-1/2 bg-white" />
             </div>
-            <ChevronDown className="w-3.5 h-3.5 text-white/70 group-hover:text-white transition-colors" />
+            <ChevronDown className="w-3.5 h-3.5 text-white/80 group-hover:text-white transition-colors ml-0.5" />
           </button>
 
           <div className="flex flex-col text-left">
-            <span className="text-white text-[15px] font-medium leading-tight">
+            <span className="text-white text-[14px] sm:text-[15px] font-medium leading-tight">
               <strong className="font-semibold text-white">Speedy Global</strong>
               , welcome!
             </span>
-            <span className="text-[#94A3B8] text-[12px] leading-tight mt-0.5 font-normal">
+            <span className="text-[#94A3B8] text-[11px] sm:text-[12px] leading-tight mt-0.5 font-normal">
               All your business needs in one platform.
             </span>
           </div>
@@ -142,16 +140,16 @@ export default function Hero() {
             aria-label="Navigation Menu"
             className="flex flex-col items-center justify-center gap-1.5 p-2 group cursor-pointer focus:outline-none"
           >
-            <span className="w-8 h-[2px] bg-white rounded-full transition-all group-hover:w-10 group-hover:bg-[#00D2FF]" />
-            <span className="w-8 h-[2px] bg-white rounded-full transition-all group-hover:w-10 group-hover:bg-[#00D2FF]" />
+            <span className="w-7 h-[2px] bg-white rounded-full transition-all group-hover:w-9 group-hover:bg-[#00D2FF]" />
+            <span className="w-7 h-[2px] bg-white rounded-full transition-all group-hover:w-9 group-hover:bg-[#00D2FF]" />
           </button>
         </div>
 
         {/* Right: "Get the app" CTA Button */}
-        <div className="flex items-center gap-4">
+        <div>
           <button
             type="button"
-            className="bg-white text-[#020817] text-[14px] font-semibold px-6 py-2.5 rounded-full hover:bg-slate-100 hover:shadow-[0_0_20px_rgba(255,255,255,0.4)] transition-all duration-200 active:scale-95 cursor-pointer shadow-md tracking-tight"
+            className="bg-white text-[#020817] text-[13px] sm:text-[14px] font-semibold px-5 sm:px-6 py-2 sm:py-2.5 rounded-full hover:bg-slate-100 hover:shadow-[0_0_25px_rgba(255,255,255,0.45)] transition-all duration-200 active:scale-95 cursor-pointer shadow-md tracking-tight"
           >
             Get the app
           </button>
@@ -159,10 +157,10 @@ export default function Hero() {
       </header>
 
       {/* Main Hero Body */}
-      <div className="relative z-20 w-full max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16 flex-1 flex flex-col lg:flex-row items-center justify-between py-8 lg:py-4">
-        {/* Left Column: Big Display Headline & Subtitle */}
-        <div className="w-full lg:w-1/2 flex flex-col justify-center text-left pt-6 lg:pt-0 z-10">
-          <h1 className="text-white text-5xl sm:text-6xl md:text-7xl lg:text-[82px] xl:text-[90px] font-bold tracking-[-0.03em] leading-[1.03] drop-shadow-sm">
+      <div className="relative z-20 w-full max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-14 flex-1 flex flex-col lg:flex-row items-center justify-between py-6 lg:py-2">
+        {/* Left Headline & Subtitle */}
+        <div className="w-full lg:w-1/2 flex flex-col justify-center text-left pt-6 lg:pt-0 lg:pl-4">
+          <h1 className="text-white text-5xl sm:text-6xl md:text-7xl lg:text-[80px] xl:text-[90px] font-bold tracking-[-0.035em] leading-[1.02] drop-shadow-sm">
             Your Money.
             <br />
             <span className="text-white">Simplified.</span>
@@ -173,16 +171,13 @@ export default function Hero() {
           </p>
         </div>
 
-        {/* Right Column: Hero Visual Composition */}
-        <div className="w-full lg:w-1/2 flex items-center justify-center lg:justify-end mt-12 lg:mt-0 relative pb-8 lg:pb-0">
-          {/* Main Backdrop Rounded Card */}
-          <div className="relative w-[310px] sm:w-[370px] md:w-[410px] h-[480px] sm:h-[540px] md:h-[580px] bg-[#f8fafc] rounded-[34px] sm:rounded-[40px] p-7 sm:p-9 shadow-[0_30px_70px_-15px_rgba(0,0,0,0.7)] flex flex-col justify-between overflow-hidden border border-white/60">
-            {/* Ambient Card Glow Behind Sculpture */}
-            <div className="absolute inset-0 bg-gradient-to-b from-[#ffffff] via-[#f1f5f9] to-[#e2e8f0] pointer-events-none" />
-
-            {/* Top Headline inside Card */}
+        {/* Right Visual Composition */}
+        <div className="w-full lg:w-1/2 flex items-center justify-center lg:justify-end mt-12 lg:mt-0 relative pb-10 lg:pb-4">
+          {/* Main Backdrop Card */}
+          <div className="relative w-[310px] sm:w-[360px] md:w-[390px] h-[500px] sm:h-[550px] md:h-[580px] bg-white rounded-[36px] sm:rounded-[42px] p-8 sm:p-10 shadow-[0_30px_70px_-15px_rgba(0,0,0,0.65)] flex flex-col justify-between overflow-hidden border border-gray-100">
+            {/* Top Typography Inside Card */}
             <div className="relative z-10">
-              <h2 className="text-[#0f172a] text-[26px] sm:text-[32px] md:text-[36px] font-bold leading-[1.12] tracking-[-0.02em]">
+              <h2 className="text-[#0f172a] text-[28px] sm:text-[32px] md:text-[36px] font-bold leading-[1.12] tracking-[-0.025em]">
                 Your Money.
                 <br />
                 Any Currency
@@ -191,24 +186,22 @@ export default function Hero() {
               </h2>
             </div>
 
-            {/* Central 3D Sculpture Asset */}
-            <div className="relative z-10 w-full flex items-center justify-center my-auto">
+            {/* Central 3D Figure-8 Ribbed Sculpture */}
+            <div className="relative z-10 w-full flex items-center justify-center my-auto pt-2">
               <img
-                src={sculptureImg}
-                alt="Ribbed coiled twist sculpture"
-                className="w-[230px] sm:w-[270px] md:w-[310px] h-auto object-contain mix-blend-multiply drop-shadow-[0_20px_25px_rgba(0,0,0,0.25)] transition-transform duration-700 hover:scale-105"
+                src={figure8Img}
+                alt="Ribbed 3D figure-eight sculpture"
+                className="w-[200px] sm:w-[240px] md:w-[265px] h-auto object-contain drop-shadow-[0_15px_20px_rgba(0,0,0,0.18)] transition-transform duration-700 hover:scale-105"
               />
             </div>
           </div>
 
-          {/* Floating Widget 1: "Deposit Received!" Pill (Top Right) */}
-          <div className="absolute top-10 sm:top-14 -right-2 sm:-right-6 md:-right-8 z-30 bg-white/95 backdrop-blur-md rounded-full py-2 sm:py-2.5 px-3.5 sm:px-4 shadow-[0_12px_32px_rgba(0,0,0,0.18)] border border-gray-100 flex items-center gap-3 transition-transform duration-300 hover:-translate-y-1">
-            {/* European Flag */}
+          {/* Floating Widget 1: "Deposit Received!" Pill (Mid Right) */}
+          <div className="absolute top-[160px] sm:top-[175px] -right-3 sm:-right-8 md:-right-10 z-40 bg-white/95 backdrop-blur-md rounded-full py-2 sm:py-2.5 px-3.5 sm:px-4 shadow-[0_15px_35px_rgba(0,0,0,0.2)] border border-gray-100/90 flex items-center gap-3 transition-transform duration-300 hover:-translate-y-1">
             <div className="flex-shrink-0 flex items-center justify-center">
               <EUFlag />
             </div>
 
-            {/* Label and Amount */}
             <div className="flex flex-col text-left pr-1">
               <span className="text-[12px] sm:text-[13px] font-bold text-gray-900 leading-tight">
                 Deposit Received!
@@ -218,38 +211,33 @@ export default function Hero() {
               </span>
             </div>
 
-            {/* Circular (+) Icon */}
-            <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full border border-gray-300 flex items-center justify-center text-gray-800 hover:border-gray-500 transition-colors">
-              <Plus className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2.5]" />
+            <div className="w-6 h-6 sm:w-7 sm:h-7 rounded-full border border-gray-300 flex items-center justify-center text-gray-800 hover:border-gray-500 transition-colors cursor-pointer">
+              <Plus className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2.2]" />
             </div>
           </div>
 
-          {/* Floating Widget 2: "Balance & Transactions" Card (Mid Left) */}
-          <div className="absolute top-[200px] sm:top-[230px] -left-4 sm:-left-16 md:-left-24 lg:-left-28 z-30 w-[270px] sm:w-[320px] md:w-[335px] bg-white rounded-[22px] sm:rounded-[26px] p-4 sm:p-5 shadow-[0_25px_60px_rgba(0,0,0,0.28)] border border-gray-100 transition-transform duration-300 hover:-translate-y-1">
-            {/* Top Bar: Sparkline Curve + Balance */}
+          {/* Floating Widget 2: "Balance & Transactions" Card (Overlapping Left) */}
+          <div className="absolute top-[190px] sm:top-[220px] -left-4 sm:-left-16 md:-left-24 lg:-left-28 z-30 w-[270px] sm:w-[320px] md:w-[335px] bg-white rounded-[24px] sm:rounded-[28px] p-4.5 sm:p-5 shadow-[0_25px_60px_rgba(0,0,0,0.25)] border border-gray-100 transition-transform duration-300 hover:-translate-y-1">
+            {/* Top Row: Mini Sparkline Graph + Balance */}
             <div className="flex items-center justify-between mb-4">
-              {/* Mini Curve Box */}
-              <div className="w-14 h-12 sm:w-16 sm:h-14 bg-[#EEF4FF] rounded-2xl p-1.5 flex flex-col justify-between relative overflow-hidden">
-                <div className="self-end bg-[#E0F2FE] text-[#0284c7] text-[9px] sm:text-[10px] font-bold px-1.5 py-0.5 rounded-full flex items-center gap-0.5">
-                  <span>↑</span> 16.9%
-                </div>
-                {/* Smooth Mini Wave SVG */}
+              {/* Mini Sparkline Pill Container */}
+              <div className="w-16 h-14 bg-[#EEF2FF] rounded-2xl p-1.5 flex flex-col justify-between relative overflow-hidden">
                 <svg
-                  viewBox="0 0 100 40"
-                  className="w-full h-6 text-[#00D2FF]"
+                  viewBox="0 0 100 45"
+                  className="w-full h-7 mt-1 text-[#3b82f6]"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
-                    d="M0 32 C 20 32, 25 12, 45 20 C 65 28, 70 8, 100 10"
+                    d="M0 35 C 20 35, 25 15, 45 22 C 65 30, 75 10, 100 12"
                     stroke="#3b82f6"
-                    strokeWidth="3"
+                    strokeWidth="3.5"
                     strokeLinecap="round"
                   />
                   <path
-                    d="M0 32 C 20 32, 25 12, 45 20 C 65 28, 70 8, 100 10 L 100 40 L 0 40 Z"
+                    d="M0 35 C 20 35, 25 15, 45 22 C 65 30, 75 10, 100 12 L 100 45 L 0 45 Z"
                     fill="url(#sparkline-grad)"
-                    opacity="0.35"
+                    opacity="0.3"
                   />
                   <defs>
                     <linearGradient
@@ -264,6 +252,11 @@ export default function Hero() {
                     </linearGradient>
                   </defs>
                 </svg>
+
+                {/* Badge positioned bottom-right */}
+                <div className="self-end bg-[#E0F2FE] text-[#0284c7] text-[8px] sm:text-[9px] font-bold px-1.5 py-0.5 rounded-full flex items-center gap-0.5 shadow-2xs">
+                  <span>↑</span> 16.9%
+                </div>
               </div>
 
               {/* Balance Amount */}
@@ -309,15 +302,15 @@ export default function Hero() {
               </div>
             </div>
 
-            {/* Bottom 3 Dots indicator */}
-            <div className="flex items-center justify-center gap-1 mt-2.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-gray-300" />
-              <span className="w-1.5 h-1.5 rounded-full bg-gray-300" />
-              <span className="w-1.5 h-1.5 rounded-full bg-gray-300" />
+            {/* Bottom 3 Dots Indicator */}
+            <div className="flex items-center justify-center gap-1.5 mt-3">
+              <span className="w-3.5 h-1 rounded-full bg-[#00D2FF]" />
+              <span className="w-1 h-1 rounded-full bg-gray-300" />
+              <span className="w-1 h-1 rounded-full bg-gray-300" />
             </div>
           </div>
 
-          {/* Floating Widget 3: "Currency Converter" Widget (Bottom Right) */}
+          {/* Floating Widget 3: Currency Converter (Bottom Right) */}
           <div className="absolute bottom-6 sm:bottom-10 -right-2 sm:-right-8 md:-right-10 z-30 w-[145px] sm:w-[155px] flex flex-col gap-1 transition-transform duration-300 hover:-translate-y-1">
             {/* Top Card: Amount */}
             <div className="bg-white rounded-2xl p-3 shadow-[0_10px_25px_rgba(0,0,0,0.15)] border border-gray-100 flex items-center justify-between">
@@ -332,14 +325,14 @@ export default function Hero() {
               <USAFlag />
             </div>
 
-            {/* Switch Arrow Connector Pill */}
+            {/* Switch Arrow Connector */}
             <div className="relative -my-2.5 z-40 self-center">
               <div className="w-6 h-6 bg-white rounded-full shadow-md border border-gray-200 flex items-center justify-center text-gray-700">
                 <ChevronDown className="w-3.5 h-3.5 stroke-[2.5]" />
               </div>
             </div>
 
-            {/* Bottom Card: To Result */}
+            {/* Bottom Card: To (Dark Theme) */}
             <div className="bg-[#182234] rounded-2xl p-3 shadow-[0_15px_30px_rgba(0,0,0,0.35)] border border-slate-700/50 flex flex-col text-left">
               <div className="flex items-center justify-between">
                 <div className="flex flex-col">
@@ -362,8 +355,8 @@ export default function Hero() {
         </div>
       </div>
 
-      {/* Bottom Status & Navigation Bar */}
-      <footer className="relative z-30 w-full px-6 sm:px-10 lg:px-16 py-6 flex items-center justify-between">
+      {/* Bottom Bar: Scroll Indicator & Help Link */}
+      <footer className="relative z-30 w-full px-6 sm:px-10 lg:px-14 py-6 flex items-center justify-between">
         {/* Scroll Indicator */}
         <div className="flex items-center gap-2.5 text-white/70 hover:text-white transition-colors cursor-pointer group">
           <div className="w-4 h-6 rounded-full border-[1.5px] border-white/60 group-hover:border-[#00D2FF] flex items-start justify-center pt-1 transition-colors">
