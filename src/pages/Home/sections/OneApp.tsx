@@ -276,7 +276,7 @@ export default function OneApp() {
     }
   }, [])
 
-  // Exact FacilPay Two-Stage Scroll Animation Logic
+  // Exact FacilPay Two-Stage Scroll Animation Logic with Smooth, Ideal Pacing
   useEffect(() => {
     const area = globeAreaRef.current
     const wrapper = wrapperRef.current
@@ -291,6 +291,18 @@ export default function OneApp() {
     const widgetElements = Array.from(widgetsParent.children) as HTMLElement[]
 
     let lastScrollY = window.scrollY
+    const timeouts: ReturnType<typeof setTimeout>[] = []
+
+    const clearAllTimeouts = () => {
+      timeouts.forEach((id) => clearTimeout(id))
+      timeouts.length = 0
+    }
+
+    const setManagedTimeout = (fn: () => void, delay: number) => {
+      const id = setTimeout(fn, delay)
+      timeouts.push(id)
+      return id
+    }
 
     function getScrollDirection() {
       const currentY = window.scrollY
@@ -299,63 +311,90 @@ export default function OneApp() {
       return direction
     }
 
-    function resetMovesReverse() {
-      // Remove classes in reverse order
-      ;[...widgetElements].reverse().forEach((el) => el.classList.remove("move"))
-      widgetsParent?.classList.remove("move")
-      if (embed) embed.classList.remove("move")
-      if (blur) blur?.classList.remove("move")
-      ;[...coinElements].reverse().forEach((el) => el.classList.remove("move"))
-      wrapper?.classList.remove("move")
+    let isMoved = false
+
+    function playForwardAnimation() {
+      if (isMoved) return
+      isMoved = true
+      clearAllTimeouts()
+
+      setIsVisible(true)
+      if (wrapper) wrapper.classList.add("move")
+
+      // Stage 1: Coins smoothly glide inward with elegant 90ms stagger
+      coinElements.forEach((el, i) => {
+        setManagedTimeout(() => {
+          el.classList.add("move")
+        }, i * 90)
+      })
+
+      // Stage 2: After coins collapse gracefully inward (~850ms), scale down the globe
+      setManagedTimeout(() => {
+        if (embed) embed.classList.add("move")
+        if (blur) blur.classList.add("move")
+        if (widgetsParent) widgetsParent.classList.add("move")
+
+        // Stage 3: As globe smoothly settles into compact scale (~600ms), blossom out the widgets
+        setManagedTimeout(() => {
+          widgetElements.forEach((el, i) => {
+            setManagedTimeout(() => {
+              el.classList.add("move")
+            }, i * 110)
+          })
+        }, 600)
+      }, 850)
     }
 
-    function animateSequentially(elements: HTMLElement[], delay = 40) {
-      return new Promise<void>((resolve) => {
-        elements.forEach((el, i) => {
-          setTimeout(() => {
-            el.classList.add("move")
-            if (i === elements.length - 1) resolve()
-          }, i * delay)
-        })
+    function playReverseAnimation() {
+      if (!isMoved) return
+      isMoved = false
+      clearAllTimeouts()
+
+      // Step 1: Widgets smoothly glide back inward with 70ms stagger
+      ;[...widgetElements].reverse().forEach((el, i) => {
+        setManagedTimeout(() => {
+          el.classList.remove("move")
+        }, i * 70)
       })
+
+      // Step 2: After widgets fold inward (~550ms), scale globe back to full size
+      setManagedTimeout(() => {
+        widgetsParent?.classList.remove("move")
+        if (embed) embed.classList.remove("move")
+        if (blur) blur?.classList.remove("move")
+
+        // Step 3: As globe expands (~650ms), fan coins back out into the arc
+        setManagedTimeout(() => {
+          ;[...coinElements].reverse().forEach((el, i) => {
+            setManagedTimeout(() => {
+              el.classList.remove("move")
+            }, i * 90)
+          })
+          wrapper?.classList.remove("move")
+        }, 650)
+      }, 550)
     }
 
     const observer = new IntersectionObserver(
       ([entry]) => {
         const direction = getScrollDirection()
 
-        if (entry.isIntersecting && entry.intersectionRatio >= 0.6) {
-          setIsVisible(true)
-          wrapper.classList.add("move")
-
-          animateSequentially(coinElements, 40)
-            .then(() => {
-              if (embed) embed.classList.add("move")
-              if (blur) blur.classList.add("move")
-              widgetsParent.classList.add("move")
-            })
-            .then(() => {
-              setTimeout(() => {
-                animateSequentially(widgetElements, 40)
-              }, 40)
-            })
-        } else if (entry.intersectionRatio < 0.4) {
-          // If scrolled up out of view, return to initial coin arc state
-          if (direction === "up") {
-            resetMovesReverse()
-          }
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.4) {
+          playForwardAnimation()
+        } else if (entry.intersectionRatio < 0.2 && direction === "up") {
+          playReverseAnimation()
         }
       },
       {
-        threshold: [0.2, 0.6],
+        threshold: [0.15, 0.4],
       }
     )
 
-    // Initial reset
-    resetMovesReverse()
+    // Initial state setup
     observer.observe(area)
 
     return () => {
+      clearAllTimeouts()
       observer.disconnect()
     }
   }, [])
@@ -625,7 +664,7 @@ export default function OneApp() {
           height: calc(70 * var(--gu));
           margin-left: auto;
           margin-right: auto;
-          transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1);
+          transition: transform 1.6s cubic-bezier(0.16, 1, 0.3, 1);
           display: flex;
           position: relative;
           transform: translate(0, calc(16 * var(--gu)));
@@ -640,7 +679,7 @@ export default function OneApp() {
           z-index: 10;
           justify-content: center;
           align-items: center;
-          transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+          transition: transform 1.6s cubic-bezier(0.16, 1, 0.3, 1);
           display: flex;
           position: absolute;
           inset: 0%;
@@ -660,7 +699,7 @@ export default function OneApp() {
           position: absolute;
           inset: 0%;
           pointer-events: none;
-          transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+          transition: transform 1.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .globe-blur.move {
@@ -678,16 +717,17 @@ export default function OneApp() {
           width: calc(90 * var(--gu));
           display: flex;
           position: absolute;
-          transition: opacity 0.8s ease;
+          transition: opacity 1.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .globe-coin {
           width: 12%;
           aspect-ratio: 1;
-          transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+          transition: all 1.3s cubic-bezier(0.16, 1, 0.3, 1);
           position: absolute;
           opacity: 1;
           transform: scale(1);
+          will-change: transform, opacity;
         }
 
         /* Initial positions for the arc */
@@ -707,7 +747,7 @@ export default function OneApp() {
           top: 44%;
           left: 44%;
           opacity: 0;
-          transform: scale(0.3);
+          transform: scale(0.25);
           pointer-events: none;
         }
 
@@ -717,7 +757,7 @@ export default function OneApp() {
           top: 44%;
           right: 44%;
           opacity: 0;
-          transform: scale(0.3);
+          transform: scale(0.25);
           pointer-events: none;
         }
 
@@ -728,9 +768,9 @@ export default function OneApp() {
           align-items: center;
           height: calc(20 * var(--gu));
           width: calc(20 * var(--gu));
-          transition: height 1.8s cubic-bezier(0.19, 1, 0.22, 1),
-                      width 1.8s cubic-bezier(0.19, 1, 0.22, 1),
-                      transform 1.8s cubic-bezier(0.19, 1, 0.22, 1);
+          transition: height 1.8s cubic-bezier(0.16, 1, 0.3, 1),
+                      width 1.8s cubic-bezier(0.16, 1, 0.3, 1),
+                      transform 1.8s cubic-bezier(0.16, 1, 0.3, 1);
           display: flex;
           position: absolute;
           transform: scale(0.8);
@@ -746,11 +786,12 @@ export default function OneApp() {
         }
 
         .globe-vidget {
-          transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+          transition: all 1.5s cubic-bezier(0.16, 1, 0.3, 1);
           position: absolute;
           opacity: 0;
-          transform: scale(0.8);
+          transform: scale(0.75);
           pointer-events: none;
+          will-change: transform, opacity;
         }
 
         .globe-vidget.move {
@@ -781,7 +822,7 @@ export default function OneApp() {
 
         /* Levitation floating animations */
         [data-levitation="1"] {
-          animation: levitateFirst 6s ease-in-out infinite;
+          animation: levitateFirst 7.5s ease-in-out infinite;
         }
 
         @keyframes levitateFirst {
@@ -789,12 +830,12 @@ export default function OneApp() {
             transform: translateY(0);
           }
           50% {
-            transform: translateY(calc(-0.4 * var(--gu)));
+            transform: translateY(calc(-0.45 * var(--gu)));
           }
         }
 
         [data-levitation="2"] {
-          animation: levitateSecond 5s ease-in-out infinite;
+          animation: levitateSecond 6.8s ease-in-out infinite;
         }
 
         @keyframes levitateSecond {
@@ -802,7 +843,7 @@ export default function OneApp() {
             transform: translateY(0);
           }
           50% {
-            transform: translateY(calc(0.4 * var(--gu)));
+            transform: translateY(calc(0.45 * var(--gu)));
           }
         }
       `}</style>
