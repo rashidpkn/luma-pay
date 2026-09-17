@@ -14,6 +14,7 @@ export default function Visibility() {
 
   return (
     <section
+      id="visibility"
       data-theme={theme}
       data-logo-color="white"
       className="relative w-full bg-[#080F38] text-white pt-24 sm:pt-32 pb-24 overflow-hidden border-t border-white/10"

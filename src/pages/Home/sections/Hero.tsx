@@ -1,4 +1,5 @@
 import { ChevronDown, Plus, HelpCircle, Trophy } from "lucide-react";
+import { useLenis } from "../../../components/SmoothScroll";
 import figure8Img from "../../../assets/sculpture-figure8.png";
 import heroBgImg from "../../../assets/hero-bg.jpg";
 
@@ -70,8 +71,10 @@ const EUFlag = () => (
 );
 
 export default function Hero() {
+  const lenis = useLenis();
+
   return (
-    <section className="relative min-h-screen w-full bg-[#080F38] text-white overflow-hidden flex flex-col justify-between selection:bg-[#00D2FF]/30 pt-24 sm:pt-28 lg:pt-32">
+    <section id="hero" className="relative min-h-screen w-full bg-[#080F38] text-white overflow-hidden flex flex-col justify-between selection:bg-[#00D2FF]/30 pt-24 sm:pt-28 lg:pt-32">
       {/* Background 3D Wave & Glow Layers */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {/* Organic 3D dark ribbon wave backdrop */}
@@ -310,12 +313,24 @@ export default function Hero() {
       {/* Bottom Bar: Scroll Indicator & Help Link */}
       <footer className="relative z-30 w-full px-6 sm:px-10 lg:px-14 py-6 flex items-center justify-between">
         {/* Scroll Indicator */}
-        <div className="flex items-center gap-2.5 text-white/70 hover:text-white transition-colors cursor-pointer group">
+        <button
+          type="button"
+          onClick={() => {
+            const nextEl = document.getElementById("steps");
+            if (nextEl && lenis) {
+              lenis.scrollTo(nextEl, { offset: -80, duration: 1.2 });
+            } else {
+              window.scrollTo({ top: window.innerHeight, behavior: "smooth" });
+            }
+          }}
+          className="flex items-center gap-2.5 text-white/70 hover:text-white transition-colors cursor-pointer group focus:outline-none"
+          aria-label="Scroll to next section"
+        >
           <div className="w-4 h-6 rounded-full border-[1.5px] border-white/60 group-hover:border-[#00D2FF] flex items-start justify-center pt-1 transition-colors">
             <span className="w-1 h-1.5 bg-white group-hover:bg-[#00D2FF] rounded-full animate-bounce" />
           </div>
           <span className="text-[12px] font-medium tracking-wide">Scroll</span>
-        </div>
+        </button>
 
         {/* Help Link */}
         <button

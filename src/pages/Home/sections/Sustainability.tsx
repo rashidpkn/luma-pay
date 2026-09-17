@@ -48,6 +48,7 @@ export default function Sustainability() {
 
   return (
     <section
+      id="sustainability"
       ref={sectionRef}
       className="sustainability-section relative bg-[#080F38] text-white py-24 sm:py-32 lg:py-40 overflow-hidden select-none border-t border-white/10"
     >

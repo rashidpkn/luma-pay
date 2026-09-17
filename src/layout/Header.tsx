@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { HelpCircle } from "lucide-react";
+import { useLenis } from "../components/SmoothScroll";
 
 // Chevron Icon matching reference
 export function ChevronIcon({ className = "w-3 h-2" }: { className?: string }) {
@@ -39,6 +40,7 @@ export function CloseIcon({ className = "w-7 h-7" }: { className?: string }) {
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const lenis = useLenis();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -55,17 +57,20 @@ export default function Header() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Prevent background scrolling when full-screen menu is open
+  // Prevent background scrolling and pause Lenis when full-screen menu is open
   useEffect(() => {
     if (isMenuOpen) {
+      lenis?.stop();
       document.body.style.overflow = "hidden";
     } else {
+      lenis?.start();
       document.body.style.overflow = "";
     }
     return () => {
+      lenis?.start();
       document.body.style.overflow = "";
     };
-  }, [isMenuOpen]);
+  }, [isMenuOpen, lenis]);
 
   return (
     <>
@@ -148,6 +153,7 @@ export default function Header() {
 
       {/* Full-Screen Menu Overlay with Smooth Animations */}
       <div
+        data-lenis-prevent
         className={`fixed inset-0 z-[60] bg-[#080F38] text-white flex flex-col justify-between px-6 sm:px-12 lg:px-20 pt-28 pb-10 overflow-y-auto transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
           isMenuOpen
             ? "opacity-100 visible pointer-events-auto"

@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { useLenis } from "../../../components/SmoothScroll";
 import {
   FileCheck,
   Send,
@@ -278,6 +279,7 @@ const stepsConfig: StepItem[] = [
 ];
 
 export default function Steps() {
+  const lenis = useLenis();
   const containerRef = useRef<HTMLDivElement>(null);
   const targetProgressRef = useRef(0);
   const currentProgressRef = useRef(0);
@@ -336,10 +338,17 @@ export default function Steps() {
     const targetRatio = stepIdx / 4;
     const targetY = containerTop + targetRatio * totalScrollable;
 
-    window.scrollTo({
-      top: targetY,
-      behavior: "smooth",
-    });
+    if (lenis) {
+      lenis.scrollTo(targetY, {
+        duration: 1.2,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      });
+    } else {
+      window.scrollTo({
+        top: targetY,
+        behavior: "smooth",
+      });
+    }
   };
 
   const handleDepositAction = () => {
@@ -352,6 +361,7 @@ export default function Steps() {
 
   return (
     <section
+      id="steps"
       ref={containerRef}
       data-logo-color="white"
       className="relative w-full h-[500vh] bg-[#080F38] text-white"
