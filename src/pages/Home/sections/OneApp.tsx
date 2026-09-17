@@ -417,7 +417,7 @@ export default function OneApp() {
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
           }`}
         >
-          <h2 className="text-5xl sm:text-6xl md:text-7xl lg:text-[80px] font-bold tracking-tight text-neutral-900 leading-[1.06] mb-6">
+          <h2 className="text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-[80px] font-bold tracking-tight text-neutral-900 leading-[1.06] mb-6">
             One App. <br />
             <span className="text-[#1a73e8]">No Borders.</span>{" "}
             <span className="text-neutral-900">No Banks.</span>
@@ -620,14 +620,14 @@ export default function OneApp() {
 
         {/* Bottom Statistics Info ("182 countries: Your wallet becomes...") */}
         <div
-          className={`mt-14 sm:mt-20 md:mt-24 max-w-5xl mx-auto flex flex-col md:flex-row items-center md:items-baseline justify-center gap-6 md:gap-12 transition-all duration-1000 delay-300 ${
+          className={`mt-14 sm:mt-20 md:mt-24 max-w-5xl mx-auto flex flex-col md:flex-row items-center md:items-baseline justify-center gap-4 sm:gap-6 md:gap-12 transition-all duration-1000 delay-300 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
           }`}
         >
-          <div className="text-8xl sm:text-9xl md:text-[136px] font-extrabold text-neutral-900 tracking-tighter leading-none font-sans">
+          <div className="text-7xl sm:text-9xl md:text-[136px] font-extrabold text-neutral-900 tracking-tighter leading-none font-sans">
             182
           </div>
-          <div className="text-2xl sm:text-3xl md:text-4xl text-neutral-800 leading-snug md:leading-tight font-normal text-center md:text-left max-w-2xl">
+          <div className="text-xl sm:text-3xl md:text-4xl text-neutral-800 leading-snug md:leading-tight font-normal text-center md:text-left max-w-2xl">
             <span className="font-semibold text-neutral-900">countries:</span>{" "}
             Your wallet becomes a{" "}
             <span className="text-[#1a73e8] font-semibold">
@@ -644,7 +644,7 @@ export default function OneApp() {
       {/* Scoped CSS mirroring FacilPay exactly */}
       <style>{`
         .oneapp-root {
-          --gu: clamp(10px, 1vw, 16px);
+          --gu: clamp(3.6px, calc(100vw / 105), 16px);
         }
 
         .globe-area {

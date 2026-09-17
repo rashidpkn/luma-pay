@@ -112,22 +112,23 @@ export default function Hero() {
 
 
       {/* Main Hero Body */}
-      <div className="relative z-20 w-full max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-14 flex-1 flex flex-col lg:flex-row items-center justify-between py-6 lg:py-2">
+      <div className="relative z-20 w-full max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-14 flex-1 flex flex-col lg:flex-row items-center justify-between py-4 sm:py-6 lg:py-2">
         {/* Left Headline & Subtitle */}
-        <div className="w-full lg:w-1/2 flex flex-col justify-center text-left pt-6 lg:pt-0 lg:pl-4">
-          <h1 className="text-white text-5xl sm:text-6xl md:text-7xl lg:text-[76px] xl:text-[84px] font-bold tracking-[-0.035em] leading-[1.04] drop-shadow-sm">
+        <div className="w-full lg:w-1/2 flex flex-col justify-center text-left pt-4 sm:pt-6 lg:pt-0 lg:pl-4">
+          <h1 className="text-white text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-[76px] xl:text-[84px] font-bold tracking-[-0.035em] leading-[1.04] drop-shadow-sm">
             Smart Payments.
             <br />
             <span className="text-white">Limitless Possibilities.</span>
           </h1>
 
-          <p className="text-[#94A3B8] text-base sm:text-lg md:text-[19px] mt-6 sm:mt-8 font-normal leading-relaxed max-w-lg tracking-normal">
+          <p className="text-[#94A3B8] text-base sm:text-lg md:text-[19px] mt-4 sm:mt-8 font-normal leading-relaxed max-w-lg tracking-normal">
             Send, spend, and stay in control, all in one app.
           </p>
         </div>
 
         {/* Right Visual Composition */}
-        <div className="w-full lg:w-1/2 flex items-center justify-center lg:justify-end mt-12 lg:mt-0 relative pb-10 lg:pb-4">
+        <div className="w-full lg:w-1/2 flex items-center justify-center lg:justify-end mt-8 sm:mt-12 lg:mt-0 relative pb-6 sm:pb-10 lg:pb-4">
+          <div className="relative transform scale-[0.78] xs:scale-[0.85] sm:scale-95 md:scale-100 origin-center -my-8 xs:-my-4 sm:my-0">
           {/* Main Backdrop Card */}
           <div className="relative w-[310px] sm:w-[360px] md:w-[390px] h-[500px] sm:h-[550px] md:h-[580px] bg-white rounded-[36px] sm:rounded-[42px] p-8 sm:p-10 shadow-[0_30px_70px_-15px_rgba(0,0,0,0.65)] flex flex-col justify-between overflow-hidden border border-gray-100">
             {/* Top Typography Inside Card */}
@@ -309,9 +310,10 @@ export default function Hero() {
           </div>
         </div>
       </div>
+      </div>
 
       {/* Bottom Bar: Scroll Indicator & Help Link */}
-      <footer className="relative z-30 w-full px-6 sm:px-10 lg:px-14 py-6 flex items-center justify-between">
+      <footer className="relative z-30 w-full px-4 sm:px-8 lg:px-14 py-4 sm:py-6 flex items-center justify-between">
         {/* Scroll Indicator */}
         <button
           type="button"

@@ -22,11 +22,11 @@ export default function Visibility() {
       {/* Background ambient lighting */}
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-[#00D2FF]/5 rounded-full blur-[180px] pointer-events-none" />
 
-      <div className="relative z-10 w-full max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-16">
+      <div className="relative z-10 w-full max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-16">
         {/* Heading */}
         <div className="text-center max-w-4xl mx-auto">
           <div className="relative inline-block mx-auto">
-            <h2 className="text-4xl sm:text-6xl lg:text-[76px] font-bold tracking-[-0.03em] leading-[1.12] text-white">
+            <h2 className="text-3xl xs:text-4xl sm:text-6xl lg:text-[76px] font-bold tracking-[-0.03em] leading-[1.12] text-white">
               Increase your{" "}
               visibility
               in
@@ -92,10 +92,10 @@ export default function Visibility() {
 
 
         {/* Sign Up Large Pill Button */}
-        <div className="flex justify-center mt-14 sm:mt-20">
+        <div className="flex justify-center mt-12 sm:mt-20 px-4">
           <a
             href="#signup"
-            className="inline-block bg-white text-[#080F38] font-semibold text-xl sm:text-2xl lg:text-3xl px-12 sm:px-20 py-5 sm:py-7 rounded-full shadow-[0_15px_40px_rgba(0,0,0,0.5)] hover:shadow-[0_20px_60px_rgba(255,255,255,0.3)] hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer text-center"
+            className="inline-block bg-white text-[#080F38] font-semibold text-base sm:text-xl md:text-2xl lg:text-3xl px-6 sm:px-12 md:px-20 py-4 sm:py-5 md:py-7 rounded-full shadow-[0_15px_40px_rgba(0,0,0,0.5)] hover:shadow-[0_20px_60px_rgba(255,255,255,0.3)] hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer text-center max-w-full"
           >
             Sign up today, receive today.
           </a>

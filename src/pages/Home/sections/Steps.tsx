@@ -367,7 +367,7 @@ export default function Steps() {
       className="relative w-full h-[500vh] bg-[#080F38] text-white"
     >
       {/* Sticky Pinned Viewport Stage */}
-      <div className="sticky top-0 h-screen w-full overflow-hidden flex flex-col justify-between pt-24 pb-8 px-6 sm:px-10 lg:px-16 border-t border-white/10 select-none">
+      <div className="sticky top-0 h-[100dvh] w-full overflow-hidden flex flex-col justify-between pt-20 sm:pt-24 pb-4 sm:pb-8 px-4 sm:px-8 lg:px-16 border-t border-white/10 select-none">
         {/* Subtle Ambient Cyan Theme Glows */}
         <div className="absolute top-1/4 right-1/4 w-[650px] h-[650px] bg-[#00D2FF]/10 rounded-full blur-[160px] pointer-events-none" />
         <div className="absolute bottom-10 left-1/3 w-[500px] h-[500px] bg-[#00D2FF]/6 rounded-full blur-[150px] pointer-events-none" />
@@ -375,9 +375,9 @@ export default function Steps() {
         {/* Main Content Row: Left Timeline & Titles + Right Morphing Cards */}
         <div className="relative z-10 w-full max-w-[1440px] mx-auto flex-1 flex flex-col lg:flex-row items-center justify-between my-auto">
           {/* Left Column: Timeline + Heading & Paragraph Stack */}
-          <div className="w-full lg:w-1/2 flex items-start gap-8 sm:gap-14 lg:gap-16">
+          <div className="w-full lg:w-1/2 flex items-start gap-4 sm:gap-10 lg:gap-16">
             {/* Vertical Timeline Step Tracker: Perfectly Centered & Smoothed */}
-            <div className="relative flex flex-col items-start gap-8 pt-2">
+            <div className="relative flex flex-col items-start gap-6 sm:gap-8 pt-2 shrink-0">
               {/* Dedicated Column for Vertical Track Line (Centered at 12px) */}
               <div className="absolute left-0 top-2 bottom-0 w-6 pointer-events-none flex justify-center">
                 {/* Connecting Track Line: starts at dot 1 center (top: 12px) and ends at dot 5 center (bottom: 12px) */}
@@ -414,9 +414,9 @@ export default function Steps() {
                           }`}
                       />
                     </div>
-                    {/* Step Label */}
+                    {/* Step Label (Hidden on small screens, keeping glowing 5-dot track) */}
                     <span
-                      className={`text-[12px] sm:text-[13px] tracking-tight transition-all duration-500 ${isActive
+                      className={`text-[12px] sm:text-[13px] tracking-tight transition-all duration-500 hidden sm:inline ${isActive
                           ? "text-white font-semibold translate-x-1"
                           : "text-slate-400 group-hover:text-slate-200"
                         }`}
@@ -429,9 +429,9 @@ export default function Steps() {
             </div>
 
             {/* Left Animated Text Container (Speedy.io Title & Text Wrapper) */}
-            <div className="flex-1 max-w-md pt-2">
+            <div className="flex-1 min-w-0 max-w-md pt-2">
               {/* Stacked Titles (Grid Overlay for Zero Layout Shift) */}
-              <div className="grid grid-cols-1 grid-rows-1 mb-4 min-h-[120px] sm:min-h-[140px] items-center">
+              <div className="grid grid-cols-1 grid-rows-1 mb-2 sm:mb-4 min-h-[72px] sm:min-h-[140px] items-center">
                 {stepsConfig.map((step, idx) => {
                   const isCurrent = activeStep === idx;
                   const isPast = activeStep > idx;
@@ -439,7 +439,7 @@ export default function Steps() {
                   return (
                     <h2
                       key={`title-${step.id}`}
-                      className="col-start-1 row-start-1 text-3xl sm:text-4xl lg:text-[50px] font-bold tracking-[-0.03em] leading-[1.12] text-white"
+                      className="col-start-1 row-start-1 text-2xl xs:text-3xl sm:text-4xl lg:text-[50px] font-bold tracking-[-0.03em] leading-[1.12] text-white"
                       style={{
                         transform: isCurrent
                           ? "translate3d(0px, 0px, 0px)"
@@ -461,7 +461,7 @@ export default function Steps() {
               </div>
 
               {/* Stacked Subtitles (Grid Overlay for Smooth Crossfade) */}
-              <div className="grid grid-cols-1 grid-rows-1 min-h-[80px]">
+              <div className="grid grid-cols-1 grid-rows-1 min-h-[46px] sm:min-h-[80px]">
                 {stepsConfig.map((step, idx) => {
                   const isCurrent = activeStep === idx;
                   const isPast = activeStep > idx;
@@ -469,7 +469,7 @@ export default function Steps() {
                   return (
                     <p
                       key={`sub-${step.id}`}
-                      className="col-start-1 row-start-1 text-[#94A3B8] text-sm sm:text-base lg:text-[17px] font-normal leading-relaxed"
+                      className="col-start-1 row-start-1 text-[#94A3B8] text-xs sm:text-base lg:text-[17px] font-normal leading-relaxed"
                       style={{
                         transform: isCurrent
                           ? "translate3d(0px, 0px, 0px)"
@@ -493,8 +493,8 @@ export default function Steps() {
           </div>
 
           {/* Right Column: Morphing Interactive Theme Cards Stage */}
-          <div className="w-full lg:w-1/2 flex items-center justify-center lg:justify-end mt-10 lg:mt-0 relative min-h-[540px]">
-            <div className="relative w-full max-w-[420px] grid grid-cols-1 grid-rows-1 items-center justify-items-center">
+          <div className="w-full lg:w-1/2 flex items-center justify-center lg:justify-end mt-1 sm:mt-6 lg:mt-0 relative min-h-[360px] sm:min-h-[500px] lg:min-h-[540px]">
+            <div className="relative w-full max-w-[420px] grid grid-cols-1 grid-rows-1 items-center justify-items-center transform scale-[0.66] xs:scale-[0.76] sm:scale-90 lg:scale-100 origin-top">
               {/* STEP 0: DEPOSIT MONEY (Ribbed Sphere Card + Floating Deposit Pills) */}
               <div
                 className="col-start-1 row-start-1 w-full flex items-center justify-center"

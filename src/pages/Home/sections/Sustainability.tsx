@@ -50,21 +50,21 @@ export default function Sustainability() {
     <section
       id="sustainability"
       ref={sectionRef}
-      className="sustainability-section relative bg-[#080F38] text-white py-24 sm:py-32 lg:py-40 overflow-hidden select-none border-t border-white/10"
+      className="sustainability-section relative bg-[#080F38] text-white py-16 sm:py-28 lg:py-40 overflow-hidden select-none border-t border-white/10"
     >
       {/* Subtle deep ambient glow behind the sculpture */}
       <div className="absolute right-0 top-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-gradient-to-br from-[#43f558]/12 via-[#00D2FF]/10 to-transparent rounded-full blur-3xl pointer-events-none" />
       <div className="absolute left-1/4 bottom-0 w-[500px] h-[300px] bg-[#00D2FF]/5 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="max-w-[1500px] mx-auto px-6 sm:px-8 lg:px-12 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+      <div className="max-w-[1500px] mx-auto px-4 sm:px-8 lg:px-12 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 items-center">
           {/* Left Column: Typography & Content */}
           <div
             className={`lg:col-span-7 xl:col-span-7 transition-all duration-1000 transform ${
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-12"
             }`}
           >
-            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[54px] xl:text-[62px] font-normal tracking-tight text-white leading-[1.12] sm:leading-[1.12] mb-8 font-sans">
+            <h2 className="text-2xl xs:text-3xl sm:text-4xl md:text-5xl lg:text-[54px] xl:text-[62px] font-normal tracking-tight text-white leading-[1.12] sm:leading-[1.12] mb-6 sm:mb-8 font-sans">
               We care about our{" "}
               <span className="text-[#43f558] font-normal drop-shadow-[0_0_24px_rgba(67,245,88,0.35)]">
                 Mother Earth
@@ -99,16 +99,16 @@ export default function Sustainability() {
               }`}
             >
               {/* Floating Planted Trees Impact Badge */}
-              <div className="absolute top-4 left-4 sm:-left-6 z-20 flex items-center gap-3 bg-white/[0.07] backdrop-blur-xl border border-white/15 rounded-2xl px-5 py-3 shadow-[0_20px_40px_rgba(0,0,0,0.6)] hover:bg-white/[0.1] transition-all group">
-                <div className="w-10 h-10 rounded-xl bg-[#43f558]/20 border border-[#43f558]/30 flex items-center justify-center text-[#43f558]">
-                  <Leaf className="w-5 h-5 animate-pulse" />
+              <div className="absolute top-2 left-2 sm:top-4 sm:-left-6 z-20 flex items-center gap-2.5 sm:gap-3 bg-white/[0.07] backdrop-blur-xl border border-white/15 rounded-2xl px-3.5 py-2 sm:px-5 sm:py-3 shadow-[0_20px_40px_rgba(0,0,0,0.6)] hover:bg-white/[0.1] transition-all group">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-[#43f558]/20 border border-[#43f558]/30 flex items-center justify-center text-[#43f558]">
+                  <Leaf className="w-4 h-4 sm:w-5 sm:h-5 animate-pulse" />
                 </div>
                 <div>
-                  <div className="text-2xl font-bold text-white tracking-tight flex items-baseline gap-1">
+                  <div className="text-xl sm:text-2xl font-bold text-white tracking-tight flex items-baseline gap-1">
                     <span>{treeCount}</span>
                     <span className="text-xs text-[#43f558] font-medium">+</span>
                   </div>
-                  <div className="text-xs text-neutral-300 font-medium">
+                  <div className="text-[11px] sm:text-xs text-neutral-300 font-medium">
                     Planted Trees
                   </div>
                 </div>

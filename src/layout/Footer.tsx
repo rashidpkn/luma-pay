@@ -7,7 +7,7 @@ export default function Footer() {
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[1px] bg-gradient-to-r from-transparent via-[#00D2FF]/60 to-transparent" />
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[500px] h-[80px] bg-[#00D2FF]/5 rounded-full blur-[70px] pointer-events-none" />
 
-      <div className="max-w-[1440px] mx-auto px-6 sm:px-10 lg:px-14 py-16">
+      <div className="max-w-[1440px] mx-auto px-4 sm:px-10 lg:px-14 py-12 sm:py-16">
         {/* Main Footer Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-8 mb-14">
           {/* Brand Col with Official Luma Pay Logo */}
@@ -98,15 +98,15 @@ export default function Footer() {
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-500">
-          <div className="flex items-center gap-2">
+        <div className="pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-500 text-center sm:text-left">
+          <div className="flex items-center justify-center sm:justify-start gap-2 flex-wrap">
             <Globe className="w-4 h-4 text-gray-400" />
             <span>English (US)</span>
             <span className="mx-2">•</span>
             <span>© 2026 Luma Pay Inc. All rights reserved.</span>
           </div>
 
-          <div className="flex items-center gap-6">
+          <div className="flex items-center justify-center gap-4 sm:gap-6 flex-wrap">
             <a href="#privacy" className="hover:text-white transition-colors">
               Privacy Policy
             </a>

@@ -76,42 +76,42 @@ export default function Header() {
     <>
       {/* Fixed Header Bar */}
       <header
-        className={`fixed top-0 left-0 right-0 z-[70] w-full px-6 sm:px-10 lg:px-14 flex items-center justify-between transition-all duration-500 ease-in-out ${
+        className={`fixed top-0 left-0 right-0 z-[70] w-full px-4 sm:px-8 lg:px-14 flex items-center justify-between transition-all duration-500 ease-in-out ${
           isMenuOpen
-            ? "bg-transparent py-6 border-b border-transparent"
+            ? "bg-transparent py-4 sm:py-6 border-b border-transparent"
             : isScrolled
-            ? "bg-[#080F38]/85 backdrop-blur-xl py-4 border-b border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.5)]"
-            : "bg-transparent py-6 sm:py-7 border-b border-transparent"
+            ? "bg-[#080F38]/85 backdrop-blur-xl py-3 sm:py-4 border-b border-white/10 shadow-[0_4px_30px_rgba(0,0,0,0.5)]"
+            : "bg-transparent py-4 sm:py-7 border-b border-transparent"
         }`}
       >
         {/* Left: Luma Pay Brand Identity */}
-        <div className="flex items-center gap-2.5 z-10">
+        <div className="flex items-center gap-2 sm:gap-2.5 z-10 min-w-0">
           <button
             type="button"
-            className="group flex items-center gap-2 focus:outline-none cursor-pointer"
+            className="group flex items-center gap-1.5 sm:gap-2 focus:outline-none cursor-pointer shrink-0"
           >
             {/* Luma Pay Official Logo Glyph */}
             <img
               src="/favicon.png"
               alt="Luma Pay logo"
-              className="w-8 h-8 rounded-lg object-contain shadow-sm transition-transform group-hover:scale-105"
+              className="w-7 h-7 sm:w-8 sm:h-8 rounded-lg object-contain shadow-sm transition-transform group-hover:scale-105"
             />
-            <ChevronIcon className="w-2.5 h-2 text-white/80 group-hover:text-white transition-colors" />
+            <ChevronIcon className="w-2.5 h-2 text-white/80 group-hover:text-white transition-colors hidden xs:block" />
           </button>
 
           {/* Subtitle text: visible when closed, cleanly hidden when menu is open */}
           <div
-            className={`flex flex-col text-left ml-1 transition-all duration-300 ${
+            className={`flex flex-col text-left transition-all duration-300 min-w-0 ${
               isMenuOpen
                 ? "opacity-0 -translate-x-3 pointer-events-none hidden sm:flex"
                 : "opacity-100 translate-x-0"
             }`}
           >
-            <span className="text-white text-[15px] sm:text-[16px] leading-tight">
+            <span className="text-white text-[13px] sm:text-[15px] md:text-[16px] leading-tight truncate">
               <strong className="font-bold text-white">Luma Pay</strong>
-              <span className="font-normal text-white">, welcome!</span>
+              <span className="font-normal text-white hidden xs:inline">, welcome!</span>
             </span>
-            <span className="text-[#94A3B8] text-[12px] sm:text-[13px] leading-tight mt-0.5 font-normal">
+            <span className="text-[#94A3B8] text-[12px] sm:text-[13px] leading-tight mt-0.5 font-normal hidden md:inline truncate">
               Smart payments. Limitless possibilities.
             </span>
           </div>
@@ -123,28 +123,28 @@ export default function Header() {
             type="button"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label={isMenuOpen ? "Close Menu" : "Open Navigation Menu"}
-            className="relative w-12 h-12 flex items-center justify-center group cursor-pointer focus:outline-none transition-transform active:scale-95"
+            className="relative w-11 h-11 sm:w-12 sm:h-12 flex items-center justify-center group cursor-pointer focus:outline-none transition-transform active:scale-95"
           >
             {isMenuOpen ? (
               /* Image 4: Crisp white X with smooth entrance */
               <div className="text-white hover:text-[#00D2FF] transition-colors flex items-center justify-center animate-fadeIn">
-                <CloseIcon className="w-7 h-7 hover:rotate-90 transition-transform duration-300" />
+                <CloseIcon className="w-6 h-6 sm:w-7 sm:h-7 hover:rotate-90 transition-transform duration-300" />
               </div>
             ) : (
               /* Two crisp horizontal bars */
-              <div className="flex flex-col items-center justify-center gap-[6px] w-8 h-8">
-                <span className="w-8 h-[2px] bg-white rounded-full transition-all group-hover:w-10 group-hover:bg-[#00D2FF]" />
-                <span className="w-8 h-[2px] bg-white rounded-full transition-all group-hover:w-10 group-hover:bg-[#00D2FF]" />
+              <div className="flex flex-col items-center justify-center gap-[5px] sm:gap-[6px] w-7 h-7 sm:w-8 sm:h-8">
+                <span className="w-7 sm:w-8 h-[2px] bg-white rounded-full transition-all group-hover:w-9 sm:group-hover:w-10 group-hover:bg-[#00D2FF]" />
+                <span className="w-7 sm:w-8 h-[2px] bg-white rounded-full transition-all group-hover:w-9 sm:group-hover:w-10 group-hover:bg-[#00D2FF]" />
               </div>
             )}
           </button>
         </div>
 
         {/* Right: "Get the app" CTA Button */}
-        <div className="z-10">
+        <div className="z-10 shrink-0">
           <button
             type="button"
-            className="bg-white text-[#080F38] text-[13px] sm:text-[14px] font-semibold px-5 sm:px-6 py-2 sm:py-2.5 rounded-full hover:bg-slate-100 hover:shadow-[0_0_25px_rgba(255,255,255,0.45)] transition-all duration-200 active:scale-95 cursor-pointer shadow-md tracking-tight"
+            className="bg-white text-[#080F38] text-[12px] sm:text-[13px] md:text-[14px] font-semibold px-3.5 sm:px-5 md:px-6 py-1.5 sm:py-2 md:py-2.5 rounded-full hover:bg-slate-100 hover:shadow-[0_0_25px_rgba(255,255,255,0.45)] transition-all duration-200 active:scale-95 cursor-pointer shadow-md tracking-tight whitespace-nowrap"
           >
             Get the app
           </button>
@@ -154,7 +154,7 @@ export default function Header() {
       {/* Full-Screen Menu Overlay with Smooth Animations */}
       <div
         data-lenis-prevent
-        className={`fixed inset-0 z-[60] bg-[#080F38] text-white flex flex-col justify-between px-6 sm:px-12 lg:px-20 pt-28 pb-10 overflow-y-auto transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+        className={`fixed inset-0 z-[60] bg-[#080F38] text-white flex flex-col justify-between px-4 sm:px-12 lg:px-20 pt-24 sm:pt-28 pb-8 sm:pb-10 overflow-y-auto transition-all duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] ${
           isMenuOpen
             ? "opacity-100 visible pointer-events-auto"
             : "opacity-0 invisible pointer-events-none"
@@ -181,27 +181,27 @@ export default function Header() {
             <nav className="flex flex-col gap-6 sm:gap-8">
               {/* Luma Business */}
               <div className="flex items-baseline flex-wrap gap-3 group cursor-pointer">
-                <span className="text-4xl sm:text-6xl md:text-7xl font-bold tracking-tight text-neutral-500 group-hover:text-neutral-300 transition-colors">
+                <span className="text-3xl sm:text-5xl md:text-7xl font-bold tracking-tight text-neutral-500 group-hover:text-neutral-300 transition-colors">
                   Luma
                 </span>
-                <span className="text-base sm:text-lg text-gray-400 font-normal group-hover:text-gray-200 transition-colors">
+                <span className="text-sm sm:text-lg text-gray-400 font-normal group-hover:text-gray-200 transition-colors">
                   Business
                 </span>
               </div>
 
               {/* Enterprise Checkout */}
-              <div className="flex items-baseline flex-wrap gap-4 group cursor-pointer">
-                <span className="text-5xl sm:text-7xl md:text-8xl font-bold tracking-tight text-white group-hover:text-[#00D2FF] transition-colors">
+              <div className="flex items-baseline flex-wrap gap-3 sm:gap-4 group cursor-pointer">
+                <span className="text-4xl sm:text-6xl md:text-8xl font-bold tracking-tight text-white group-hover:text-[#00D2FF] transition-colors">
                   Enterprise
                 </span>
-                <span className="text-base sm:text-lg text-gray-400 font-normal group-hover:text-gray-200 transition-colors">
+                <span className="text-sm sm:text-lg text-gray-400 font-normal group-hover:text-gray-200 transition-colors">
                   Checkout
                 </span>
               </div>
 
               {/* Eden Project */}
               <div className="group cursor-pointer">
-                <span className="text-5xl sm:text-7xl md:text-8xl font-bold tracking-tight text-white group-hover:text-[#00D2FF] transition-colors">
+                <span className="text-4xl sm:text-6xl md:text-8xl font-bold tracking-tight text-white group-hover:text-[#00D2FF] transition-colors">
                   Eden Project
                 </span>
               </div>
