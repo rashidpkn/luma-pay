@@ -12,6 +12,7 @@ export default function SustainabilitySculpture({ className = "" }: Sustainabili
   const containerRef = useRef<HTMLDivElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const [loading, setLoading] = useState(true)
+  const [is3DReady, setIs3DReady] = useState(false)
   const [progress, setProgress] = useState(0)
 
   useEffect(() => {
@@ -141,6 +142,8 @@ export default function SustainabilitySculpture({ className = "" }: Sustainabili
         pivotGroup.position.set(0, -0.2, 0)
 
         spinnerGroup.add(pivotGroup)
+        renderer.render(scene, camera)
+        setIs3DReady(true)
         setLoading(false)
       },
       (xhr) => {
@@ -228,25 +231,32 @@ export default function SustainabilitySculpture({ className = "" }: Sustainabili
       ref={containerRef}
       className={`relative w-full aspect-square max-w-[540px] mx-auto select-none pointer-events-none ${className}`}
     >
-      {/* Loading Indicator */}
-      {loading && (
-        <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 z-10">
-          <div className="w-12 h-12 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-[#43f558] shadow-[0_0_30px_rgba(67,245,88,0.2)]">
-            <Loader2 className="w-6 h-6 animate-spin text-[#43f558]" />
-          </div>
-          {progress > 0 && (
-            <div className="text-xs text-neutral-300 font-mono tracking-wider">
-              {progress}%
-            </div>
-          )}
-        </div>
-      )}
+      {/* Still Poster Image of the Ceiba Tree: Visible instantly with zero loading delay */}
+      <img
+        src="/3d/tree/ceiba-pentandra-poster.webp"
+        alt="Ceiba Pentandra Tree"
+        className={`absolute inset-0 w-full h-full object-contain pointer-events-none transition-opacity duration-1000 ease-out drop-shadow-[0_25px_50px_rgba(0,0,0,0.7)] ${
+          is3DReady ? "opacity-0" : "opacity-100"
+        }`}
+      />
 
-      {/* 3D Canvas */}
+      {/* 3D Canvas: Seamlessly cross-fades in once the 3D model finishes downloading */}
       <canvas
         ref={canvasRef}
-        className="w-full h-full block drop-shadow-[0_25px_50px_rgba(0,0,0,0.7)]"
+        className={`w-full h-full block drop-shadow-[0_25px_50px_rgba(0,0,0,0.7)] transition-opacity duration-1000 ease-out ${
+          is3DReady ? "opacity-100" : "opacity-0"
+        }`}
       />
+
+      {/* Sleek, minimal 3D background downloading indicator */}
+      {loading && (
+        <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#080F38]/85 backdrop-blur-md border border-white/10 text-xs text-neutral-300 shadow-xl pointer-events-none transition-all duration-500">
+          <Loader2 className="w-3.5 h-3.5 animate-spin text-[#43f558]" />
+          <span className="font-mono text-[11px] tracking-wide text-neutral-300">
+            {progress > 0 ? `Loading 3D (${progress}%)` : "Loading 3D Experience..."}
+          </span>
+        </div>
+      )}
     </div>
   )
 }
