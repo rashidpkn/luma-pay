@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react"
 import * as THREE from "three"
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js"
+import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js"
 import { Loader2 } from "lucide-react"
 
 interface SustainabilitySculptureProps {
@@ -84,28 +85,11 @@ export default function SustainabilitySculpture({ className = "" }: Sustainabili
     const spinnerGroup = new THREE.Group()
     masterGroup.add(spinnerGroup)
 
-    // 5. Load GLB Model: /3d/tree/ceiba-pentandra.glb
+    // 5. Load GLB Model: /3d/tree/ceiba-pentandra.glb (optimized 27MB with Draco)
     const loader = new GLTFLoader()
-
-    // Optional legacy extension fallback
-    loader.register((parser) => ({
-      name: "KHR_materials_pbrSpecularGlossiness",
-      getMaterialType: () => THREE.MeshStandardMaterial,
-      extendMaterialParams: async (materialIndex: number, materialParams: any) => {
-        const materialDef = parser.json.materials[materialIndex]
-        if (!materialDef.extensions || !materialDef.extensions.KHR_materials_pbrSpecularGlossiness) return
-        const ext = materialDef.extensions.KHR_materials_pbrSpecularGlossiness
-        if (ext.diffuseTexture) {
-          materialParams.map = await parser.getDependency("texture", ext.diffuseTexture.index)
-        }
-        if (ext.diffuseFactor) {
-          materialParams.color = new THREE.Color().fromArray(ext.diffuseFactor)
-          materialParams.opacity = ext.diffuseFactor[3] !== undefined ? ext.diffuseFactor[3] : 1
-        }
-        materialParams.roughness = ext.glossinessFactor !== undefined ? Math.max(0.1, 1.0 - ext.glossinessFactor) : 0.85
-        materialParams.metalness = 0.05
-      },
-    }))
+    const dracoLoader = new DRACOLoader()
+    dracoLoader.setDecoderPath("/draco/")
+    loader.setDRACOLoader(dracoLoader)
 
     loader.load(
       "/3d/tree/ceiba-pentandra.glb",
@@ -235,6 +219,7 @@ export default function SustainabilitySculpture({ className = "" }: Sustainabili
         }
       })
       renderer.dispose()
+      dracoLoader.dispose()
     }
   }, [])
 

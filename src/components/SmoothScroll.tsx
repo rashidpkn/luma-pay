@@ -1,13 +1,15 @@
-import { useEffect, type ReactNode } from "react";
-import { ReactLenis, useLenis } from "lenis/react";
+import { useEffect, useState, createContext, useContext, type ReactNode } from "react";
+import Lenis from "lenis";
+
+const LenisContext = createContext<Lenis | null>(null);
+
+export const useLenis = () => useContext(LenisContext);
 
 interface SmoothScrollProps {
   children: ReactNode;
 }
 
-function LenisAnchorHandler() {
-  const lenis = useLenis();
-
+function LenisAnchorHandler({ lenis }: { lenis: Lenis | null }) {
   useEffect(() => {
     if (!lenis) return;
 
@@ -39,7 +41,7 @@ function LenisAnchorHandler() {
           lenis.scrollTo(element as HTMLElement, {
             offset: -80,
             duration: 1.2,
-            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+            easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
           });
           // Update URL hash cleanly without default harsh browser jump
           window.history.pushState(null, "", href);
@@ -55,21 +57,30 @@ function LenisAnchorHandler() {
 }
 
 export default function SmoothScroll({ children }: SmoothScrollProps) {
+  const [lenisInstance, setLenisInstance] = useState<Lenis | null>(null);
+
+  useEffect(() => {
+    const lenis = new Lenis({
+      lerp: 0.08,
+      duration: 1.2,
+      smoothWheel: true,
+      wheelMultiplier: 1.0,
+      touchMultiplier: 1.5,
+      autoRaf: true,
+    });
+
+    setLenisInstance(lenis);
+
+    return () => {
+      lenis.destroy();
+      setLenisInstance(null);
+    };
+  }, []);
+
   return (
-    <ReactLenis
-      root
-      options={{
-        lerp: 0.08,
-        duration: 1.2,
-        smoothWheel: true,
-        wheelMultiplier: 1.0,
-        touchMultiplier: 1.5,
-      }}
-    >
-      <LenisAnchorHandler />
+    <LenisContext.Provider value={lenisInstance}>
+      <LenisAnchorHandler lenis={lenisInstance} />
       {children}
-    </ReactLenis>
+    </LenisContext.Provider>
   );
 }
-
-export { useLenis };
