@@ -281,13 +281,11 @@ const stepsConfig: StepItem[] = [
 export default function Steps() {
   const lenis = useLenis();
   const containerRef = useRef<HTMLDivElement>(null);
-  const targetProgressRef = useRef(0);
-  const currentProgressRef = useRef(0);
   const [smoothProgress, setSmoothProgress] = useState(0);
   const [activeStep, setActiveStep] = useState(0);
   const [isDepositing, setIsDepositing] = useState(false);
 
-  // Monitor scroll position with smooth lerp momentum interpolation
+  // Monitor scroll position in direct sync with smooth Lenis momentum
   useEffect(() => {
     const handleScroll = () => {
       if (!containerRef.current) return;
@@ -298,35 +296,29 @@ export default function Steps() {
 
       const currentScroll = -rect.top;
       const rawProg = Math.min(1, Math.max(0, currentScroll / totalScrollable));
-      targetProgressRef.current = rawProg;
+      setSmoothProgress(rawProg);
+
+      // 5 steps: 0, 1, 2, 3, 4 with comfortable landing zones
+      const stepIdx = Math.min(4, Math.max(0, Math.round(rawProg * 4)));
+      setActiveStep(stepIdx);
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleScroll, { passive: true });
     handleScroll();
 
-    let animId: number;
-    const updateSmoothProgress = () => {
-      // Gentle dampening filter for silky smooth progress gliding
-      const diff = targetProgressRef.current - currentProgressRef.current;
-      if (Math.abs(diff) > 0.0001) {
-        currentProgressRef.current += diff * 0.095;
-        const prog = Math.min(1, Math.max(0, currentProgressRef.current));
-        setSmoothProgress(prog);
-
-        // 5 steps: 0, 1, 2, 3, 4 with comfortable midpoint landing zones
-        const stepIdx = Math.min(4, Math.max(0, Math.round(prog * 4)));
-        setActiveStep(stepIdx);
-      }
-      animId = requestAnimationFrame(updateSmoothProgress);
-    };
-
-    animId = requestAnimationFrame(updateSmoothProgress);
+    if (lenis) {
+      lenis.on("scroll", handleScroll);
+    }
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      cancelAnimationFrame(animId);
+      window.removeEventListener("resize", handleScroll);
+      if (lenis) {
+        lenis.off("scroll", handleScroll);
+      }
     };
-  }, []);
+  }, [lenis]);
 
   // Smooth-scroll directly to target step when clicking timeline dot or CTA
   const scrollToStep = (stepIdx: number) => {
@@ -340,7 +332,7 @@ export default function Steps() {
 
     if (lenis) {
       lenis.scrollTo(targetY, {
-        duration: 1.2,
+        duration: 1.0,
         easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       });
     } else {
@@ -364,7 +356,7 @@ export default function Steps() {
       id="steps"
       ref={containerRef}
       data-logo-color="white"
-      className="relative w-full h-[500vh] bg-[#080F38] text-white"
+      className="relative w-full h-[320vh] bg-[#080F38] text-white"
     >
       {/* Sticky Pinned Viewport Stage */}
       <div className="sticky top-0 h-[100dvh] w-full overflow-hidden flex flex-col justify-between pt-20 sm:pt-24 pb-4 sm:pb-8 px-4 sm:px-8 lg:px-16 border-t border-white/10 select-none">

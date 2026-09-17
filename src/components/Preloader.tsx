@@ -30,8 +30,6 @@ export default function Preloader({
   const [pLength, setPLength] = useState(1250);
   const [isLFillVisible, setIsLFillVisible] = useState(false);
   const [isPFillVisible, setIsPFillVisible] = useState(false);
-  const [showGlint, setShowGlint] = useState(false);
-  const [glintTwinkle, setGlintTwinkle] = useState(false);
   const [cometL, setCometL] = useState<{ x: number; y: number; angle: number; visible: boolean }>({
     x: 210,
     y: 52,
@@ -52,10 +50,11 @@ export default function Preloader({
   const animFrameRef = useRef<number | null>(null);
   const startTimeRef = useRef<number | null>(null);
   const isManualRef = useRef<boolean>(false);
+  const hasCalledCompleteRef = useRef<boolean>(false);
 
   // Helper to spawn sparkling stardust motes behind comet
   const spawnSparkles = useCallback((x: number, y: number, colorTier: "cyan" | "purple") => {
-    const colors = colorTier === "cyan" 
+    const colors = colorTier === "cyan"
       ? ["#FFFFFF", "#E0FAFF", "#00F0FF", "#3805F6", "#70E0FF"]
       : ["#FFFFFF", "#D8B4FE", "#7B2BFF", "#A855F7", "#08DBFF"];
 
@@ -109,8 +108,6 @@ export default function Preloader({
 
       setIsLFillVisible(lFrac > 0.45);
       setIsPFillVisible(false);
-      setShowGlint(false);
-      setGlintTwinkle(false);
       setCometP(prev => ({ ...prev, visible: false }));
 
     } else if (t < 0.48) {
@@ -120,14 +117,10 @@ export default function Preloader({
       setIsLFillVisible(true);
       setIsPFillVisible(false);
       setCometL(prev => ({ ...prev, visible: false }));
-      setShowGlint(true);
-      setGlintTwinkle(true);
       setCometP(prev => ({ ...prev, visible: false }));
 
     } else if (t < 0.82) {
       setStage("p-trace");
-      setShowGlint(false);
-      setGlintTwinkle(true); // Lingering subtle twinkle at L apex
       setLProgress(1);
       setIsLFillVisible(true);
 
@@ -153,15 +146,17 @@ export default function Preloader({
       setPProgress(1);
       setIsLFillVisible(true);
       setIsPFillVisible(true);
-      setShowGlint(false);
-      setGlintTwinkle(false);
       setCometL(prev => ({ ...prev, visible: false }));
       setCometP(prev => ({ ...prev, visible: false }));
 
     } else {
       setStage("exit");
+      if (onComplete && !hasCalledCompleteRef.current) {
+        hasCalledCompleteRef.current = true;
+        onComplete();
+      }
     }
-  }, [spawnSparkles]);
+  }, [spawnSparkles, onComplete]);
 
   // Main animation loop
   useEffect(() => {
@@ -185,7 +180,10 @@ export default function Preloader({
         if (t >= 1) {
           setTimeout(() => {
             setStage("hidden");
-            if (onComplete) onComplete();
+            if (onComplete && !hasCalledCompleteRef.current) {
+              hasCalledCompleteRef.current = true;
+              onComplete();
+            }
           }, 400);
           return;
         }
@@ -230,6 +228,7 @@ export default function Preloader({
 
     (window as unknown as Record<string, unknown>).__replayPreloader = () => {
       isManualRef.current = false;
+      hasCalledCompleteRef.current = false;
       startTimeRef.current = null;
       setStage("l-trace");
       applyProgress(0);
@@ -242,35 +241,19 @@ export default function Preloader({
     };
   }, [minDuration, onComplete, applyProgress]);
 
-  const handleSkip = () => {
-    setStage("hidden");
-    if (onComplete) onComplete();
-  };
 
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") handleSkip();
-      if (e.key === "r" || e.key === "R") {
-        if ((window as unknown as Record<string, () => void>).__replayPreloader) {
-          (window as unknown as Record<string, () => void>).__replayPreloader();
-        }
-      }
-    };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, []);
+
+
 
   if (stage === "hidden") return null;
 
   return (
     <div
-      onClick={handleSkip}
-      onTouchEnd={handleSkip}
-      className={`fixed inset-0 w-[100dvw] h-[100dvh] z-[99999] flex flex-col items-center justify-center bg-[#080F38] cursor-pointer select-none touch-none overflow-hidden transition-all duration-700 ease-out ${
-        stage === "exit"
-          ? "opacity-0 scale-105 pointer-events-none blur-sm"
-          : "opacity-100 scale-100"
-      }`}
+
+      className={`fixed inset-0 w-[100dvw] h-[100dvh] z-[99999] flex flex-col items-center justify-center bg-[#0A101F] cursor-pointer select-none touch-none overflow-hidden transition-all duration-700 ease-out ${stage === "exit"
+        ? "opacity-0 scale-105 pointer-events-none blur-sm"
+        : "opacity-100 scale-100"
+        }`}
       aria-label="Loading Luma Pay"
       role="status"
     >
@@ -278,19 +261,17 @@ export default function Preloader({
       <div className="absolute inset-0 pointer-events-none overflow-hidden flex items-center justify-center">
         {/* Deep atmospheric backdrop radial gradient */}
         <div
-          className={`w-[680px] h-[680px] rounded-full blur-[130px] transition-all duration-700 ${
-            stage === "unified"
-              ? "bg-gradient-to-tr from-[#410FFD]/45 via-[#08DBFF]/35 to-[#3805F6]/45 scale-125"
-              : stage === "p-trace"
+          className={`w-[680px] h-[680px] rounded-full blur-[130px] transition-all duration-700 ${stage === "unified"
+            ? "bg-gradient-to-tr from-[#410FFD]/45 via-[#08DBFF]/35 to-[#3805F6]/45 scale-125"
+            : stage === "p-trace"
               ? "bg-gradient-to-r from-[#410FFD]/35 to-[#08DBFF]/30 scale-110"
               : "bg-gradient-to-b from-[#3805F6]/35 to-[#06B9FF]/25 scale-100"
-          }`}
+            }`}
         />
         {/* Concentric subtle radar rings */}
         <div
-          className={`absolute w-[440px] h-[440px] rounded-full border border-cyan-400/20 blur-sm transition-all duration-1000 ${
-            stage === "unified" ? "scale-140 opacity-40" : "scale-100 opacity-15"
-          }`}
+          className={`absolute w-[440px] h-[440px] rounded-full border border-cyan-400/20 blur-sm transition-all duration-1000 ${stage === "unified" ? "scale-140 opacity-40" : "scale-100 opacity-15"
+            }`}
         />
       </div>
 
@@ -366,16 +347,6 @@ export default function Preloader({
               <feGaussianBlur in="SourceGraphic" stdDeviation="16" result="blurH" />
               <feMerge>
                 <feMergeNode in="blurH" />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
-
-            {/* 4-Point Star Glint Flash Filter */}
-            <filter id="glint-filter" x="-100%" y="-100%" width="300%" height="300%">
-              <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blurG" />
-              <feMerge>
-                <feMergeNode in="blurG" />
-                <feMergeNode in="blurG" />
                 <feMergeNode in="SourceGraphic" />
               </feMerge>
             </filter>
@@ -463,16 +434,15 @@ export default function Preloader({
           {/* Solid "L" Glyph Fill (Fades in & solidifies)             */}
           {/* ======================================================== */}
           <g
-            className={`transition-all duration-700 ease-out ${
-              isLFillVisible ? "opacity-100 scale-100" : "opacity-0 scale-95 origin-bottom-left"
-            }`}
+            className={`transition-all duration-700 ease-out ${isLFillVisible ? "opacity-100 scale-100" : "opacity-0 scale-95 origin-bottom-left"
+              }`}
             style={{
               filter:
                 stage === "unified"
                   ? "drop-shadow(0 0 28px rgba(6, 185, 255, 0.7)) drop-shadow(0 0 50px rgba(56, 5, 246, 0.5))"
                   : isLFillVisible
-                  ? "drop-shadow(0 0 16px rgba(6, 185, 255, 0.45))"
-                  : "none",
+                    ? "drop-shadow(0 0 16px rgba(6, 185, 255, 0.45))"
+                    : "none",
             }}
           >
             <path
@@ -502,35 +472,6 @@ export default function Preloader({
               <circle r="18" fill="#00F0FF" opacity="0.85" filter="url(#neon-glow-soft)" />
               {/* Ultra hot white core */}
               <circle r="6.5" fill="#FFFFFF" />
-            </g>
-          )}
-
-          {/* ======================================================== */}
-          {/* STAGE 2: 4-Point Star Glint Flash at "L" Apex           */}
-          {/* ======================================================== */}
-          {(showGlint || glintTwinkle) && (
-            <g
-              transform="translate(210, 52)"
-              className={`pointer-events-none transition-all duration-500 ${
-                showGlint ? "scale-100 opacity-100" : "scale-75 opacity-70"
-              }`}
-            >
-              {/* Primary 4-point Diamond Glint */}
-              <polygon
-                points="0,-46 10,-10 46,0 10,10 0,46 -10,10 -46,0 -10,-10"
-                fill="#FFFFFF"
-                filter="url(#glint-filter)"
-              />
-              {/* Rotated 45-degree Cyan Beam */}
-              <polygon
-                points="0,-26 6,-6 26,0 6,6 0,26 -6,6 -26,0 -6,-6"
-                fill="#68DFFF"
-                transform="rotate(45)"
-                filter="url(#glint-filter)"
-              />
-              {/* Nova center circle */}
-              <circle r="9" fill="#FFFFFF" />
-              <circle r="18" fill="#00F0FF" opacity="0.75" filter="url(#neon-glow-soft)" />
             </g>
           )}
 
@@ -586,16 +527,15 @@ export default function Preloader({
           {/* Solid "P" Glyph Fill (Fades in & solidifies)             */}
           {/* ======================================================== */}
           <g
-            className={`transition-all duration-700 ease-out ${
-              isPFillVisible ? "opacity-100 scale-100" : "opacity-0 scale-95 origin-center"
-            }`}
+            className={`transition-all duration-700 ease-out ${isPFillVisible ? "opacity-100 scale-100" : "opacity-0 scale-95 origin-center"
+              }`}
             style={{
               filter:
                 stage === "unified"
                   ? "drop-shadow(0 0 28px rgba(8, 219, 255, 0.7)) drop-shadow(0 0 50px rgba(65, 15, 253, 0.5))"
                   : isPFillVisible
-                  ? "drop-shadow(0 0 16px rgba(8, 219, 255, 0.45))"
-                  : "none",
+                    ? "drop-shadow(0 0 16px rgba(8, 219, 255, 0.45))"
+                    : "none",
             }}
           >
             <path
@@ -653,15 +593,14 @@ export default function Preloader({
         </svg>
       </div>
 
-      {/* Brand Typography & Progress Bar */}
-      <div className="mt-8 flex flex-col items-center gap-3 select-none">
+
+      {/* <div className="mt-8 flex flex-col items-center gap-3 select-none">
         <div className="flex items-center gap-2">
           <span className="text-white font-bold tracking-[0.38em] text-lg sm:text-xl drop-shadow-[0_0_12px_rgba(255,255,255,0.4)]">
             LUMA PAY
           </span>
         </div>
 
-        {/* Minimal High-Tech Progress Bar */}
         <div className="w-48 sm:w-56 h-[3px] bg-white/10 rounded-full overflow-hidden relative">
           <div
             className="h-full bg-gradient-to-r from-[#410FFD] via-[#08DBFF] to-[#3805F6] rounded-full transition-all duration-100 ease-out"
@@ -669,17 +608,14 @@ export default function Preloader({
           />
         </div>
 
-        {/* Percentage Counter */}
+        
         <div className="flex items-center justify-between w-48 sm:w-56 text-[11px] font-mono tracking-widest text-cyan-300/70">
           <span>INITIALIZING</span>
           <span className="text-white font-semibold">{progress}%</span>
         </div>
-      </div>
+      </div> */}
 
-      {/* Subtle Skip Hint with Mobile Safe Area Inset */}
-      <div className="absolute bottom-[max(1.25rem,env(safe-area-inset-bottom))] text-[11px] tracking-wider text-white/35 hover:text-white/75 transition-colors uppercase font-mono text-center px-4">
-        Tap or click anywhere to skip
-      </div>
+
     </div>
   );
 }

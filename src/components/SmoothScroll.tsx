@@ -1,3 +1,4 @@
+import "lenis/dist/lenis.css";
 import { useEffect, useState, createContext, useContext, type ReactNode } from "react";
 import Lenis from "lenis";
 
@@ -20,7 +21,7 @@ function LenisAnchorHandler({ lenis }: { lenis: Lenis | null }) {
         const timer = setTimeout(() => {
           lenis.scrollTo(target as HTMLElement, {
             offset: -80,
-            duration: 1.2,
+            duration: 1.1,
             immediate: false,
           });
         }, 400);
@@ -40,7 +41,7 @@ function LenisAnchorHandler({ lenis }: { lenis: Lenis | null }) {
           e.preventDefault();
           lenis.scrollTo(element as HTMLElement, {
             offset: -80,
-            duration: 1.2,
+            duration: 1.1,
             easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
           });
           // Update URL hash cleanly without default harsh browser jump
@@ -56,22 +57,33 @@ function LenisAnchorHandler({ lenis }: { lenis: Lenis | null }) {
   return null;
 }
 
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
 export default function SmoothScroll({ children }: SmoothScrollProps) {
   const [lenisInstance, setLenisInstance] = useState<Lenis | null>(null);
 
   useEffect(() => {
     const lenis = new Lenis({
-      lerp: 0.08,
-      duration: 1.2,
+      duration: 1.1,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
       wheelMultiplier: 1.0,
-      touchMultiplier: 1.5,
+      touchMultiplier: 1.0,
+      syncTouch: false,
       autoRaf: true,
+      overscroll: true,
     });
+
+    // Synchronize Lenis smooth scroll updates with GSAP ScrollTrigger
+    lenis.on("scroll", ScrollTrigger.update);
 
     setLenisInstance(lenis);
 
     return () => {
+      lenis.off("scroll", ScrollTrigger.update);
       lenis.destroy();
       setLenisInstance(null);
     };

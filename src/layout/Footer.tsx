@@ -26,12 +26,7 @@ export default function Footer() {
               </p>
             </div>
 
-            <div className="mt-8 flex items-center gap-3">
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
-              <span className="text-xs text-gray-400 font-medium">
-                Systems fully operational
-              </span>
-            </div>
+
           </div>
 
           {/* Nav Col 1: Products */}

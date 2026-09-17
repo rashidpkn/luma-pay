@@ -1,13 +1,16 @@
 import { Routes, Route } from "react-router-dom";
 import SmoothScroll from "./components/SmoothScroll";
 import Preloader from "./components/Preloader";
+import { PreloaderProvider, usePreloader } from "./context/PreloaderContext";
 import Layout from "./layout";
 import HomePage from "./pages/Home";
 
-export default function App() {
+function AppContent() {
+  const { setLoaded } = usePreloader();
+
   return (
     <>
-      <Preloader />
+      <Preloader onComplete={setLoaded} />
       <SmoothScroll>
         <Routes>
           <Route element={<Layout />}>
@@ -16,5 +19,13 @@ export default function App() {
         </Routes>
       </SmoothScroll>
     </>
+  );
+}
+
+export default function App() {
+  return (
+    <PreloaderProvider>
+      <AppContent />
+    </PreloaderProvider>
   );
 }

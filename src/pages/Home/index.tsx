@@ -1,17 +1,19 @@
-import Hero from "./sections/Hero"
-import Steps from "./sections/Steps"
-import Visibility from "./sections/Visibility"
-import OneApp from "./sections/OneApp"
-import Sustainability from "./sections/Sustainability"
+import Hero from "./sections/Hero";
+import Steps from "./sections/Steps";
+import Visibility from "./sections/Visibility";
+import OneApp from "./sections/OneApp";
+import Sustainability from "./sections/Sustainability";
+import FAQ from "./sections/FAQ";
 
 export default function HomePage() {
-    return (
-        <div>
-            <Hero />
-            <Steps />
-            <Visibility />
-            <OneApp />
-            <Sustainability />
-        </div>
-    )
+  return (
+    <div>
+      <Hero />
+      <Steps />
+      <Visibility />
+      <OneApp />
+      <Sustainability />
+      <FAQ />
+    </div>
+  );
 }

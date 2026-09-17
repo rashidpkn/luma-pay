@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef } from "react"
 import * as THREE from "three"
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js"
 
@@ -13,8 +13,6 @@ export default function OneApp() {
   const embedRef = useRef<HTMLDivElement>(null)
   const blurRef = useRef<HTMLDivElement>(null)
   const widgetsRef = useRef<HTMLDivElement>(null)
-
-  const [isVisible, setIsVisible] = useState(false)
 
   // Subtle ambient floating dust particles
   useEffect(() => {
@@ -52,7 +50,19 @@ export default function OneApp() {
       speedX: (Math.random() - 0.5) * 0.2,
     }))
 
+    let isVisible = false
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isVisible = entry.isIntersecting
+      },
+      { threshold: 0.01 }
+    )
+    observer.observe(canvas)
+
     const render = () => {
+      animationFrameId = requestAnimationFrame(render)
+      if (!isVisible) return
+
       ctx.clearRect(0, 0, width, height)
 
       particles.forEach((p) => {
@@ -71,8 +81,6 @@ export default function OneApp() {
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2)
         ctx.fill()
       })
-
-      animationFrameId = requestAnimationFrame(render)
     }
 
     render()
@@ -80,6 +88,7 @@ export default function OneApp() {
     return () => {
       window.removeEventListener("resize", handleResize)
       cancelAnimationFrame(animationFrameId)
+      observer.disconnect()
     }
   }, [])
 
@@ -97,6 +106,7 @@ export default function OneApp() {
     let dotMesh: THREE.InstancedMesh
     let animationFrameId: number
     let isDisposed = false
+    let globeObserver: IntersectionObserver | null = null
 
     const init = () => {
       try {
@@ -256,9 +266,19 @@ export default function OneApp() {
       resize()
       window.addEventListener("resize", resize)
 
+      let isGlobeVisible = false
+      globeObserver = new IntersectionObserver(
+        ([entry]) => {
+          isGlobeVisible = entry.isIntersecting
+        },
+        { threshold: 0.05 }
+      )
+      globeObserver.observe(container)
+
       const animate = () => {
         if (isDisposed) return
         animationFrameId = requestAnimationFrame(animate)
+        if (!isGlobeVisible) return
         controls.update()
         renderer.render(scene, camera)
       }
@@ -271,6 +291,7 @@ export default function OneApp() {
     return () => {
       isDisposed = true
       cancelAnimationFrame(animationFrameId)
+      globeObserver?.disconnect()
       controls?.dispose()
       renderer?.dispose()
     }
@@ -318,7 +339,6 @@ export default function OneApp() {
       isMoved = true
       clearAllTimeouts()
 
-      setIsVisible(true)
       if (wrapper) wrapper.classList.add("move")
 
       // Stage 1: Coins smoothly glide inward with elegant 90ms stagger
@@ -379,14 +399,14 @@ export default function OneApp() {
       ([entry]) => {
         const direction = getScrollDirection()
 
-        if (entry.isIntersecting && entry.intersectionRatio >= 0.4) {
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.25) {
           playForwardAnimation()
-        } else if (entry.intersectionRatio < 0.2 && direction === "up") {
+        } else if (entry.intersectionRatio < 0.15 && direction === "up") {
           playReverseAnimation()
         }
       },
       {
-        threshold: [0.15, 0.4],
+        threshold: [0.15, 0.25],
       }
     )
 
@@ -403,7 +423,7 @@ export default function OneApp() {
     <section
       id="oneapp"
       ref={sectionRef}
-      className="oneapp-root relative min-h-screen bg-gradient-to-b from-[#e8f7ff] via-[#d4efff] to-[#bfe6ff] pt-20 pb-28 md:pt-28 md:pb-36 overflow-hidden select-none"
+      className="oneapp-root relative bg-gradient-to-b from-[#e8f7ff] via-[#d4efff] to-[#bfe6ff] pt-14 pb-16 md:pt-20 md:pb-20 overflow-hidden select-none"
     >
       {/* Ambient background particles */}
       <div className="absolute inset-0 pointer-events-none opacity-70">
@@ -411,13 +431,9 @@ export default function OneApp() {
       </div>
 
       <div className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Headline & Description */}
-        <div
-          className={`text-center max-w-3xl mx-auto transition-all duration-1000 transform ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-          }`}
-        >
-          <h2 className="text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-[80px] font-bold tracking-tight text-neutral-900 leading-[1.06] mb-6">
+        {/* Headline & Description - ALWAYS clearly visible */}
+        <div className="text-center max-w-3xl mx-auto opacity-100 translate-y-0">
+          <h2 className="text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-[76px] font-bold tracking-tight text-neutral-900 leading-[1.06] mb-4 sm:mb-5">
             One App. <br />
             <span className="text-[#1a73e8]">No Borders.</span>{" "}
             <span className="text-neutral-900">No Banks.</span>
@@ -620,14 +636,12 @@ export default function OneApp() {
 
         {/* Bottom Statistics Info ("182 countries: Your wallet becomes...") */}
         <div
-          className={`mt-14 sm:mt-20 md:mt-24 max-w-5xl mx-auto flex flex-col md:flex-row items-center md:items-baseline justify-center gap-4 sm:gap-6 md:gap-12 transition-all duration-1000 delay-300 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-          }`}
+          className="mt-6 sm:mt-8 md:mt-10 max-w-5xl mx-auto flex flex-col md:flex-row items-center md:items-baseline justify-center gap-4 sm:gap-6 md:gap-10 opacity-100 translate-y-0"
         >
-          <div className="text-7xl sm:text-9xl md:text-[136px] font-extrabold text-neutral-900 tracking-tighter leading-none font-sans">
+          <div className="text-6xl sm:text-8xl md:text-[110px] lg:text-[120px] font-extrabold text-neutral-900 tracking-tighter leading-none font-sans">
             182
           </div>
-          <div className="text-xl sm:text-3xl md:text-4xl text-neutral-800 leading-snug md:leading-tight font-normal text-center md:text-left max-w-2xl">
+          <div className="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-neutral-800 leading-snug md:leading-tight font-normal text-center md:text-left max-w-2xl">
             <span className="font-semibold text-neutral-900">countries:</span>{" "}
             Your wallet becomes a{" "}
             <span className="text-[#1a73e8] font-semibold">
@@ -644,7 +658,7 @@ export default function OneApp() {
       {/* Scoped CSS mirroring FacilPay exactly */}
       <style>{`
         .oneapp-root {
-          --gu: clamp(3.6px, calc(100vw / 105), 16px);
+          --gu: clamp(3.6px, 1.1vw, 8.5px);
         }
 
         .globe-area {
@@ -653,8 +667,8 @@ export default function OneApp() {
           display: flex;
           position: relative;
           width: 100%;
-          margin-top: 2rem;
-          margin-bottom: 2rem;
+          margin-top: calc(18 * var(--gu));
+          margin-bottom: 1.5rem;
         }
 
         .globe-wrapper {
@@ -668,7 +682,7 @@ export default function OneApp() {
           transition: transform 1.6s cubic-bezier(0.16, 1, 0.3, 1);
           display: flex;
           position: relative;
-          transform: translate(0, calc(16 * var(--gu)));
+          transform: translate(0, 0);
         }
 
         .globe-wrapper.move {
