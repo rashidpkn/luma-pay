@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import { ArrowRight, Leaf } from "lucide-react"
+import SustainabilitySculpture from "./SustainabilitySculpture"
 
 export default function Sustainability() {
   const sectionRef = useRef<HTMLElement>(null)
@@ -44,21 +45,6 @@ export default function Sustainability() {
     return () => clearInterval(timer)
   }, [isVisible])
 
-  // Subtle parallax tilt on mouse move & scroll
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!imageRef.current || !sectionRef.current) return
-      const rect = sectionRef.current.getBoundingClientRect()
-      const scrollProgress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height)
-      if (scrollProgress >= 0 && scrollProgress <= 1) {
-        const translateY = (scrollProgress - 0.5) * -45
-        imageRef.current.style.transform = `translate3d(0, ${translateY}px, 0)`
-      }
-    }
-
-    window.addEventListener("scroll", handleScroll, { passive: true })
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
 
   return (
     <section
@@ -127,34 +113,15 @@ export default function Sustainability() {
                 </div>
               </div>
 
-              {/* 3D Sculpture Image */}
-              <div className="sculpture-float-container">
-                <img
-                  src="/sustainability-sculpture.png"
-                  alt="Mother Earth Sustainability Sculpture"
-                  className="w-full h-auto object-contain drop-shadow-[0_30px_60px_rgba(0,0,0,0.8)] pointer-events-none"
-                  loading="lazy"
-                />
+              {/* Interactive 3D Sculpture */}
+              <div className="relative z-10">
+                <SustainabilitySculpture />
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <style>{`
-        .sculpture-float-container {
-          animation: gentleSculptureFloat 6.5s ease-in-out infinite;
-        }
-
-        @keyframes gentleSculptureFloat {
-          0%, 100% {
-            transform: translateY(0px) rotate(0deg);
-          }
-          50% {
-            transform: translateY(-14px) rotate(1deg);
-          }
-        }
-      `}</style>
     </section>
   )
 }
