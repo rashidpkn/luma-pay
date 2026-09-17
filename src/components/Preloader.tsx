@@ -22,7 +22,6 @@ export default function Preloader({
   onComplete,
   minDuration = 2800,
 }: PreloaderProps) {
-  const [progress, setProgress] = useState(0);
   const [stage, setStage] = useState<"l-trace" | "l-glint" | "p-trace" | "unified" | "exit" | "hidden">("l-trace");
   const [lProgress, setLProgress] = useState(0);
   const [pProgress, setPProgress] = useState(0);
@@ -79,8 +78,8 @@ export default function Preloader({
 
   // Update animation state for a normalized progress t (0.0 to 1.0)
   const applyProgress = useCallback((t: number) => {
-    const pct = Math.floor(t * 100);
-    setProgress(pct);
+
+
 
     // STAGES BREAKDOWN:
     // 0.00 -> 0.38: Trace "L" spine (Comet sweeps from apex to foot base)

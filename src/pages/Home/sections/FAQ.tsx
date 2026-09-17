@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { ChevronDown, HelpCircle, Mail } from "lucide-react";
+import { ChevronDown, HelpCircle } from "lucide-react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useLenis } from "../../../components/SmoothScroll";
@@ -235,8 +235,8 @@ export default function FAQ() {
               <div
                 key={idx}
                 className={`faq-item rounded-2xl transition-all duration-300 overflow-hidden ${isOpen
-                    ? "bg-[#0A101F] border border-[#00D2FF]/35 shadow-[0_12px_35px_rgba(0,0,0,0.45),0_0_20px_rgba(0,210,255,0.06)]"
-                    : "bg-[#0A101F]/90 hover:bg-[#0A101F] border border-white/5 hover:border-white/15 shadow-[0_4px_20px_rgba(0,0,0,0.25)]"
+                  ? "bg-[#0A101F] border border-[#00D2FF]/35 shadow-[0_12px_35px_rgba(0,0,0,0.45),0_0_20px_rgba(0,210,255,0.06)]"
+                  : "bg-[#0A101F]/90 hover:bg-[#0A101F] border border-white/5 hover:border-white/15 shadow-[0_4px_20px_rgba(0,0,0,0.25)]"
                   }`}
               >
                 <button
@@ -247,8 +247,8 @@ export default function FAQ() {
                 >
                   <span
                     className={`text-[15px] sm:text-[17px] font-semibold pr-4 leading-snug transition-colors ${isOpen
-                        ? "text-white"
-                        : "text-gray-200 group-hover:text-white"
+                      ? "text-white"
+                      : "text-gray-200 group-hover:text-white"
                       }`}
                   >
                     {item.question}
@@ -256,8 +256,8 @@ export default function FAQ() {
 
                   <span
                     className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 transition-all duration-300 ${isOpen
-                        ? "bg-[#00D2FF]/15 text-[#00D2FF] rotate-180 shadow-[0_0_10px_rgba(0,210,255,0.2)]"
-                        : "bg-white/5 text-gray-400 group-hover:bg-white/10 group-hover:text-white"
+                      ? "bg-[#00D2FF]/15 text-[#00D2FF] rotate-180 shadow-[0_0_10px_rgba(0,210,255,0.2)]"
+                      : "bg-white/5 text-gray-400 group-hover:bg-white/10 group-hover:text-white"
                       }`}
                   >
                     <ChevronDown className="w-4 h-4 stroke-[2.5]" />
@@ -267,8 +267,8 @@ export default function FAQ() {
                 {/* Animated Answer Tray */}
                 <div
                   className={`grid transition-all duration-300 ease-out ${isOpen
-                      ? "grid-rows-[1fr] opacity-100"
-                      : "grid-rows-[0fr] opacity-0 pointer-events-none"
+                    ? "grid-rows-[1fr] opacity-100"
+                    : "grid-rows-[0fr] opacity-0 pointer-events-none"
                     }`}
                 >
                   <div className="overflow-hidden">
